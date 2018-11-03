@@ -19,5 +19,13 @@
         <activity android:name=".InputActivity">
         </activity>
 
+        <activity
+            android:name=".AnyOrientationCaptureActivity"
+            android:screenOrientation="fullSensor"
+            android:stateNotNeeded="true"
+            android:theme="@style/zxing_CaptureTheme"
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+        <activity android:name=".CustomScannerActivity"></activity>
+
     </application>
 </manifest>

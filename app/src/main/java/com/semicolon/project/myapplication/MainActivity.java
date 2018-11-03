@@ -37,22 +37,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    public void startQRCode() {
-        new IntentIntegrator(this).initiateScan();
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == IntentIntegrator.REQUEST_CODE) {
-            IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-            if (result == null) {
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
-            }
-        } else {
-            super.onActivityResult(requestCode, resultCode, null);
-        }
-    }
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
@@ -71,8 +55,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startQRCode();
                 break;
         }
-
-
     }
 
     public void anim() {
@@ -89,6 +71,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             fab1.setClickable(true);
             fab2.setClickable(true);
             isFabOpen = true;
+        }
+    }
+
+    public void startQRCode() { //바코드 리딩 함수
+        //new IntentIntegrator(this).initiateScan();
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.setCaptureActivity(CustomScannerActivity.class);
+        integrator.initiateScan();
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) { //바코드 리딩 결과값 출력
+        if (requestCode == IntentIntegrator.REQUEST_CODE) {
+            IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+            if (result == null) {
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, null);
         }
     }
 }
