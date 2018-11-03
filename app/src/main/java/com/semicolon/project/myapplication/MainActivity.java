@@ -35,15 +35,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fab1.setOnClickListener(this);
         fab2.setOnClickListener(this);
 
-
-        /*findViewById(R.id.btn_start_qrcode_reader).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startQRCode();
-            }
-        });
-        */
-
     }
 
     public void startQRCode() {
@@ -53,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == IntentIntegrator.REQUEST_CODE) {
             IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+            //startActivity(new Intent(MainActivity.this,InputActivity.class));
             if (result == null) {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
             } else {
