@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -19,10 +22,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Boolean isFabOpen = false;
     private FloatingActionButton fab, fab1, fab2;
 
+    private String[] navItems = {"보관함", "통계표", "에러 문의"};
+    private ListView lvNavList;
+    private FrameLayout flContainer;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //네비게이션 메뉴
+
+        lvNavList = (ListView)findViewById(R.id.lv_activity_main_nav_list);
+        flContainer = (FrameLayout)findViewById(R.id.fl_activity_main_container);
+
+        lvNavList.setAdapter(
+                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, navItems));
+        lvNavList.setOnItemClickListener(new DrawerItemClickListener());
+
 
         //시작
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
