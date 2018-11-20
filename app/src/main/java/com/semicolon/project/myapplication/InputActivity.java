@@ -16,12 +16,10 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_activity);
 
-        Button select = findViewById(R.id.select_date);
         ImageView pic = findViewById(R.id.image);
         Button save=findViewById(R.id.save);
         Button cancel=findViewById(R.id.cancel);
 
-        select.setOnClickListener(this);
         save.setOnClickListener(this);
         cancel.setOnClickListener(this);
 
@@ -42,10 +40,6 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
-            case R.id.select_date:
-                new DatePickerDialog(this, listener, 2018, 11, 04).show();
-                Toast.makeText(this, "Floating Action Button", Toast.LENGTH_SHORT).show();
-                break;
             case R.id.save:
                 finish();
                 break;
