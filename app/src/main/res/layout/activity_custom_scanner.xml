@@ -16,8 +16,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#578e5d">
-    </LinearLayout>
+        android:background="#D85346"></LinearLayout>
 
 
     <Button
@@ -37,7 +36,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        android:background="#578e5d"
+        android:background="#D85346"
         android:gravity="center">
 
         <TextView
