@@ -65,6 +65,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //툴바
+        myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+
+        //네비게이션 메뉴
+
+        lvNavList = (ListView)findViewById(R.id.lv_activity_main_nav_list);
+        flContainer = (FrameLayout)findViewById(R.id.fl_activity_main_container);
+
+        //메뉴버튼
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_dehaze_black_24dp);
+
+        lvNavList.setAdapter(
+                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, navItems));
+        lvNavList.setOnItemClickListener(new DrawerItemClickListener());
+
+
+        //시작
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
 
@@ -75,64 +94,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fab.setOnClickListener(this);
         fab1.setOnClickListener(this);
         fab2.setOnClickListener(this);
-        /*super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        툴바
-        myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
-
-        //네비게이션 메뉴
-
-        lvNavList = (ListView)findViewById(R.id.lv_activity_main_nav_list);
-        flContainer = (FrameLayout)findViewById(R.id.fl_activity_main_container);
-
-         메뉴버튼
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_dehaze_black_24dp);
-
-        lvNavList.setAdapter(
-                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, navItems));
-        lvNavList.setOnItemClickListener(new DrawerItemClickListener());
-
-
-        시작
-        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
-        fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
-
-        fab =  findViewById(R.id.fab);
-        fab1 =  findViewById(R.id.fab1);
-        fab2 =  findViewById(R.id.fab2);
-
-        fab.setOnClickListener(this);
-        fab1.setOnClickListener(this);
-        fab2.setOnClickListener(this);*/
 
     }
 
     @Override
     public void onClick(View v) {
-        int id = v.getId();
-        switch (id) {
-            case R.id.fab:
-                anim();
-                Toast.makeText(this, "Floating Action Button", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.fab1:
-                anim();
-                Toast.makeText(this, "Button1", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.fab2:
-                anim();
-                Toast.makeText(this, "Button2", Toast.LENGTH_SHORT).show();
-                break;
-        }
-
-
-    }
-/*
-    public void onClick(View v) {
-
         int id = v.getId();
         switch (id) {
             case R.id.fab:
@@ -150,8 +116,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startQRCode();
                 break;
         }
+
+
     }
-*/
+
     public void anim() {
 
         if (isFabOpen) {
