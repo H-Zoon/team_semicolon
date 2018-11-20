@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="array_voice">
+        <item>알림</item>
+        <item>알림왔숑</item>
+        <item>알림알림</item>
+        <item>알림왔숑</item>
+    </string-array>
+</resources>

@@ -2,9 +2,15 @@ package com.semicolon.project.myapplication;
 
 import android.content.Intent;
 import android.os.Build;
+import android.preference.Preference;
+import android.preference.PreferenceActivity;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -12,7 +18,6 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -22,20 +27,56 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Boolean isFabOpen = false;
     private FloatingActionButton fab, fab1, fab2;
 
-    private String[] navItems = {"보관함", "통계표", "에러 문의"};
+    Toolbar myToolbar;
+    private String[] navItems = {"툴바에 가려지네요 깔~", "보관함", "통계표", "에러 문의"};
     private ListView lvNavList;
     private FrameLayout flContainer;
 
+
+    //메뉴 레이아웃 생성 함수
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Intent intent=new Intent(this, SettingAct.class);
+                startActivity(intent);
+                //Toast.makeText(getApplicationContext(), "환경설정 버튼 클릭됨", Toast.LENGTH_LONG).show();
+
+
+                return true;
+
+            default:
+                //Toast.makeText(getApplicationContext(), "나머지 버튼 클릭됨", Toast.LENGTH_LONG).show();
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // 툴바
+        myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+
         //네비게이션 메뉴
 
         lvNavList = (ListView)findViewById(R.id.lv_activity_main_nav_list);
         flContainer = (FrameLayout)findViewById(R.id.fl_activity_main_container);
+
+        /* 메뉴버튼
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_dehaze_black_24dp);
+        */
 
         lvNavList.setAdapter(
                 new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, navItems));
