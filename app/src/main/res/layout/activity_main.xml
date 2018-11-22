@@ -6,6 +6,29 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
+    <!--날짜출력 레이아웃 포함-->
+    <ImageView
+        android:background="@xml/rectangle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|top"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="295dp" />
+    <include
+        layout="@layout/activity_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|top"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="70dp" />
+    <include
+        layout="@layout/today_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="300dp"/>
+    <!-- 툴바-->
     <android.support.v7.widget.Toolbar
         android:id = "@+id/my_toolbar"
         android:layout_width="match_parent"
@@ -15,6 +38,9 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
+
+
+    <!-- 플로팅 버튼-->
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab2"
         android:layout_width="wrap_content"

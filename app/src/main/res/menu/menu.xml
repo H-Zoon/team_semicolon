@@ -8,15 +8,17 @@
         android:title="환경설정"
         android:icon="@drawable/ic_settings_black_24dp"
         app:showAsAction="ifRoom"/>
-<!--
-    <item
-        android:id="@+id/action_settings2"
-        android:title="항목1"
-        app:showAsAction="never"/>
+    <!--
+        <item
+            android:id="@+id/action_settings2"
+            android:title="메뉴"
+            android:icon="@drawable/ic_dehaze_black_24dp"
+            android:layout_gravity = "start"
+            app:showAsAction="never"/>
 
-    <item
-        android:id="@+id/action_settings3"
-        android:title="항목2"
-        app:showAsAction="never"/>-->
+        <item
+            android:id="@+id/action_settings3"
+            android:title="항목2"
+            app:showAsAction="never"/>-->
 
 </menu>

@@ -3,8 +3,9 @@ package com.semicolon.project.myapplication;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,8 +16,15 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.TextView;
+import android.support.v7.app.ActionBar;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.text.SimpleDateFormat;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -29,6 +37,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ListView lvNavList;
     private FrameLayout flContainer;
 
+    //날짜 관련 변수
+    TextView printDate;
+    long now = System.currentTimeMillis();
+    Date date = new Date(now);
+    SimpleDateFormat sdfNow = new SimpleDateFormat("MM월dd일");
+    String Today = sdfNow.format(date);
 
     //메뉴 레이아웃 생성 함수
     @Override
@@ -65,6 +79,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //툴바
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_settings_black_24dp);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        //날짜출력
+        printDate = (TextView) findViewById(R.id.Date_String);
+        printDate.setText(Today);
 
         //네비게이션 메뉴
 
@@ -91,7 +112,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fab.setOnClickListener(this);
         fab1.setOnClickListener(this);
         fab2.setOnClickListener(this);
-
     }
 
     @Override
@@ -113,10 +133,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startQRCode();
                 break;
         }
-
-
     }
-
     public void anim() {
 
         if (isFabOpen) {
