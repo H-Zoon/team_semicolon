@@ -1,9 +1,6 @@
 package com.semicolon.project.myapplication;
 
 import android.content.Intent;
-import android.os.Build;
-import android.preference.Preference;
-import android.preference.PreferenceActivity;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -45,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()) {
             case R.id.action_settings:
-                Intent intent=new Intent(this, SettingAct.class);
+                Intent intent=new Intent(this, SettingActivity.class);
                 startActivity(intent);
                 //Toast.makeText(getApplicationContext(), "환경설정 버튼 클릭됨", Toast.LENGTH_LONG).show();
 

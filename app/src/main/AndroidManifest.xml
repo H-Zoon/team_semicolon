@@ -24,7 +24,7 @@
             android:theme="@style/zxing_CaptureTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".CustomScannerActivity" />
-        <activity android:name=".SettingAct"></activity>
+        <activity android:name=".SettingActivity"></activity>
     </application>
 
 </manifest>

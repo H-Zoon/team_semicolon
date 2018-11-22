@@ -48,7 +48,7 @@ public class DBManager {
 
             //String createSql = "CREATE TABLE IF NOT EXISTS APinfo (_id INTEGER PRIMARY KEY AUTOINCREMENT, Name text)" ;
 
-            arg0.execSQL("CREATE TABLE IF NOT EXISTS APinfo.db (_id INTEGER PRIMARY KEY AUTOINCREMENT,"+" Name text);" );
+            arg0.execSQL("CREATE TABLE IF NOT EXISTS APinfo (_id INTEGER PRIMARY KEY AUTOINCREMENT,"+" Name text);" );
             Toast.makeText(context, "DB is opened", Toast.LENGTH_LONG).show();
         }
 
@@ -59,12 +59,10 @@ public class DBManager {
     }
 
     // 데이터 추가
-    public void insertData(String nahaha) {
-        //String sql = "INSERT INTO APinfo VALUES (null, 'a')" ;
-        //db.execSQL("INSERT INTO APinfo VALUES (null, na);");
+    public void insertData(String Name) {
 
         ContentValues values = new ContentValues();
-        values.put("Name", nahaha);
+        values.put("Name", Name);
 
         long result = db.insert(tableName, null, values);
     }

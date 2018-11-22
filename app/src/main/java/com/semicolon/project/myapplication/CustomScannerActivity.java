@@ -1,5 +1,5 @@
 package com.semicolon.project.myapplication;
-
+// 스케너화면 커스텀
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -8,7 +8,6 @@ import android.widget.Button;
 
 import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
-
 
 public class CustomScannerActivity extends Activity implements DecoratedBarcodeView.TorchListener{
 

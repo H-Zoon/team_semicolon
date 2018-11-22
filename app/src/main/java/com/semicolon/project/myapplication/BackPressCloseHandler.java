@@ -1,6 +1,6 @@
 package com.semicolon.project.myapplication;
 
-
+//뒤로가기 핸들러 클래스
 import android.app.Activity;
 import android.widget.Toast;
 

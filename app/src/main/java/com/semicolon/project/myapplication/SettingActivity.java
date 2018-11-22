@@ -1,20 +1,13 @@
-/*package com.semicolon.project.myapplication;
-import android.content.Intent;
+package com.semicolon.project.myapplication;
+// 설정화면 클래스
+import android.app.Activity;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceActivity;
 
-
-public class SettingActivity extends PreferenceActivity{
+public class SettingActivity extends Activity {
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_setting);
-    addPreferencesFromResource(R.xml.setting);
-    Intent intent=new Intent(SettingActivity.this, MainActivity.class);
-    //Preference test=findPreference("god");
-    startActivity(intent);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_setting);
+    }
 }
-}
-*/

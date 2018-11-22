@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -41,6 +42,13 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
         int id = v.getId();
         switch (id) {
             case R.id.save:
+
+                DBManager bd = new DBManager(this);
+                EditText name = findViewById(R.id.name);
+                String Name=name.getText().toString();
+
+                bd.insertData(Name);
+
                 finish();
                 break;
             case R.id.cancel:
