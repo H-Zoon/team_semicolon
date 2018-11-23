@@ -1,10 +1,15 @@
 package com.semicolon.project.myapplication;
 
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,13 +17,38 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+
+    //시작
+    private static String TAG = "phpquerytest";
+    private static final String TAG_JSON="webnautes";
+    private static final String TAG_ID = "id";
+    private static final String TAG_NAME = "name";
+    private static final String TAG_ADDRESS ="address";
+    private TextView mTextViewResult;
+
+    ListView mListViewList;
+    String mJsonString;
+    //끝
 
     private Animation fab_open, fab_close;
     private Boolean isFabOpen = false;
@@ -61,6 +91,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //MainActivity.context = getApplicationContext();
 
         //툴바
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -109,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.fab2:
                 anim();
-                Toast.makeText(this, "Button2", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Button2", Toast.LENGTH_SHORT).show();
                 startQRCode();
                 break;
         }
@@ -135,7 +167,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void startQRCode() { //바코드 리딩 함수
-        //new IntentIntegrator(this).initiateScan();
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.setCaptureActivity(CustomScannerActivity.class);
         integrator.initiateScan();
@@ -145,13 +176,89 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (requestCode == IntentIntegrator.REQUEST_CODE) {
             IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             if (result == null) {
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "정보가 없습니다.", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(MainActivity.this,InputActivity.class));
             } else {
                 Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                String Barcode = String.valueOf(result.getContents());
+                new GetData().execute(new String(Barcode));
             }
         } else {
             super.onActivityResult(requestCode, resultCode, null);
         }
     }
+
+    // 시작해보자.
+
+    private class GetData extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+
+
+        protected String doInBackground(String... params) {
+
+            String serverURL = "http://211.204.136.165:80/query.php";
+            String postParameters = "code=" + params;
+
+            try {
+
+                URL url = new URL(serverURL);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setReadTimeout(5000);
+                httpURLConnection.setConnectTimeout(5000);
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoInput(true);
+                httpURLConnection.connect();
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                outputStream.write(postParameters.getBytes("UTF-8"));
+                outputStream.flush();
+                outputStream.close();
+
+                int responseStatusCode = httpURLConnection.getResponseCode();
+
+                Log.d(TAG, "response code - " + responseStatusCode);
+
+
+                InputStream inputStream;
+
+                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
+                    inputStream = httpURLConnection.getInputStream();
+                }
+
+                else{
+                    inputStream = httpURLConnection.getErrorStream();
+                }
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                StringBuilder sb = new StringBuilder();
+                String line;
+
+                while((line = bufferedReader.readLine()) != null){
+                    sb.append(line);
+                }
+                bufferedReader.close();
+                return sb.toString().trim();
+
+            } catch (Exception e) {
+                Log.d(TAG, "InsertData: Error ", e);
+                return null;
+            }
+        }
+
+        protected void onPostExecute(String result) {
+            Intent intent=(new Intent(MainActivity.this,InputActivity.class));
+            intent.putExtra("Name",String.valueOf(result));
+            startActivity(intent);
+        }
+    }
 }
+
+
+
 

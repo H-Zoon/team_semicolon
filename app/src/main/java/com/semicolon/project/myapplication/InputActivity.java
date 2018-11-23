@@ -1,6 +1,7 @@
 package com.semicolon.project.myapplication;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 
 public class InputActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -23,6 +25,11 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
 
         save.setOnClickListener(this);
         cancel.setOnClickListener(this);
+
+        Intent intent=new Intent(this.getIntent());
+        String s=intent.getStringExtra("Name");
+        EditText Nameview=(EditText)findViewById(R.id.name);
+        Nameview.setText(s);
 
     }
 
@@ -43,11 +50,9 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
         switch (id) {
             case R.id.save:
 
-                DBManager bd = new DBManager(this);
                 EditText name = findViewById(R.id.name);
                 String Name=name.getText().toString();
 
-                bd.insertData(Name);
 
                 finish();
                 break;
