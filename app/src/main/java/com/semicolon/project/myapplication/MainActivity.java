@@ -255,6 +255,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent=(new Intent(MainActivity.this,InputActivity.class));
             intent.putExtra("Name",String.valueOf(result));
             startActivity(intent);
+
+
         }
     }
 }
