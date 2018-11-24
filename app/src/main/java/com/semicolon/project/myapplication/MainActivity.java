@@ -2,7 +2,6 @@ package com.semicolon.project.myapplication;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
@@ -36,18 +35,21 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+
+
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     //시작
-    private static String TAG = "phpquerytest";
+    private static String TAG = "sql debug";
     private static final String TAG_JSON="webnautes";
     private static final String TAG_ID = "id";
     private static final String TAG_NAME = "name";
     private static final String TAG_ADDRESS ="address";
-    private TextView mTextViewResult;
 
-    ListView mListViewList;
-    String mJsonString;
+    public static String mJsonString;
+    public String j_name;
+
     //끝
 
     private Animation fab_open, fab_close;
@@ -180,8 +182,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(MainActivity.this,InputActivity.class));
             } else {
                 Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
-                String Barcode = String.valueOf(result.getContents());
-                new GetData().execute(new String(Barcode));
+                Log.d(TAG, "scaned");
+                new GetData().execute(result.getContents());
             }
         } else {
             super.onActivityResult(requestCode, resultCode, null);
@@ -190,24 +192,57 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     // 시작해보자.
 
-    private class GetData extends AsyncTask<String, Void, String> {
+    private class GetData extends AsyncTask<String, Void, String>{
+
+
+        ProgressDialog progressDialog;
+        String errorString = null;
+
 
         @Override
+
         protected void onPreExecute() {
             super.onPreExecute();
+            Log.d(TAG, "start");
+            progressDialog = ProgressDialog.show(MainActivity.this,
+                    "Please Wait", null, true, true);
         }
+        @Override
 
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
 
+            progressDialog.dismiss();
+            //mTextViewResult.setText(result);
+
+            Log.d(TAG, "response - " + result);
+
+            if (result == null){
+                Toast.makeText(MainActivity.this, "정보가 없습니다.", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(MainActivity.this,InputActivity.class));
+            }
+
+            else {
+                mJsonString = result;
+                Toast.makeText(MainActivity.this, "가즈아.", Toast.LENGTH_LONG).show();
+                showResult();
+            }
+        }
 
         protected String doInBackground(String... params) {
 
+            String cdata = params[0];
+
+            Log.d("params", "params - " + params[0]);
+
             String serverURL = "http://211.204.136.165:80/query.php";
-            String postParameters = "code=" + params;
+            String postParameters = "code=" + cdata;
 
             try {
 
                 URL url = new URL(serverURL);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
                 httpURLConnection.setReadTimeout(5000);
                 httpURLConnection.setConnectTimeout(5000);
                 httpURLConnection.setRequestMethod("POST");
@@ -220,9 +255,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 outputStream.close();
 
                 int responseStatusCode = httpURLConnection.getResponseCode();
-
-                Log.d(TAG, "response code - " + responseStatusCode);
-
+                Log.d(TAG, " code - " + responseStatusCode);
 
                 InputStream inputStream;
 
@@ -251,15 +284,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
 
-        protected void onPostExecute(String result) {
-            Intent intent=(new Intent(MainActivity.this,InputActivity.class));
-            intent.putExtra("Name",String.valueOf(result));
-            startActivity(intent);
+       private void showResult(){
 
+           try {
+               JSONObject jsonObject = new JSONObject(mJsonString);
+               JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
 
-        }
+               for(int i=0;i<jsonArray.length();i++) {
+                   JSONObject item = jsonArray.getJSONObject(i);
+
+                   //String id = item.getString(TAG_ID);
+                   j_name = item.getString(TAG_NAME);
+                   //String address = item.getString(TAG_ADDRESS);
+/*
+                   HashMap<String,String> hashMap = new HashMap<>();
+                   hashMap.put(TAG_ID, id);
+                   hashMap.put(TAG_NAME, name);
+                   hashMap.put(TAG_ADDRESS, address);
+                   mArrayList.add(hashMap);
+*/
+               }
+
+               Intent intent = (new Intent(MainActivity.this, InputActivity.class));
+               intent.putExtra("Name", String.valueOf(j_name));
+               startActivity(intent);
+
+           } catch (JSONException e) {
+               Log.d(TAG, "showResult : ", e);
+           }
+       }
     }
-}
+
+    }
 
 
 

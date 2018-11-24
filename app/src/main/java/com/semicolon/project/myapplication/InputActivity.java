@@ -28,8 +28,8 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
 
         Intent intent=new Intent(this.getIntent());
         String s=intent.getStringExtra("Name");
-        EditText Nameview=(EditText)findViewById(R.id.name);
-        Nameview.setText(s);
+        EditText view_name=(EditText)findViewById(R.id.name);
+        view_name.setText(s);
 
     }
 
