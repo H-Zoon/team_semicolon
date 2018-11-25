@@ -181,9 +181,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(this, "정보가 없습니다.", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(MainActivity.this,InputActivity.class));
             } else {
-                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
-                Log.d(TAG, "scaned");
-                new GetData().execute(result.getContents());
+                //Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                new GetData().execute(result.getContents());    //AsyncTask 시작
             }
         } else {
             super.onActivityResult(requestCode, resultCode, null);
@@ -194,10 +193,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private class GetData extends AsyncTask<String, Void, String>{
 
-
         ProgressDialog progressDialog;
         String errorString = null;
-
 
         @Override
 
@@ -213,7 +210,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.onPostExecute(result);
 
             progressDialog.dismiss();
-            //mTextViewResult.setText(result);
 
             Log.d(TAG, "response - " + result);
 
@@ -224,7 +220,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             else {
                 mJsonString = result;
-                Toast.makeText(MainActivity.this, "가즈아.", Toast.LENGTH_LONG).show();
                 showResult();
             }
         }
@@ -275,6 +270,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 while((line = bufferedReader.readLine()) != null){
                     sb.append(line);
                 }
+
                 bufferedReader.close();
                 return sb.toString().trim();
 
@@ -293,16 +289,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                for(int i=0;i<jsonArray.length();i++) {
                    JSONObject item = jsonArray.getJSONObject(i);
 
-                   //String id = item.getString(TAG_ID);
                    j_name = item.getString(TAG_NAME);
-                   //String address = item.getString(TAG_ADDRESS);
-/*
-                   HashMap<String,String> hashMap = new HashMap<>();
-                   hashMap.put(TAG_ID, id);
-                   hashMap.put(TAG_NAME, name);
-                   hashMap.put(TAG_ADDRESS, address);
-                   mArrayList.add(hashMap);
-*/
+
                }
 
                Intent intent = (new Intent(MainActivity.this, InputActivity.class));
