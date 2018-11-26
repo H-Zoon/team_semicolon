@@ -12,8 +12,10 @@ import android.widget.Toast;
 
 public class InputActivity extends AppCompatActivity implements View.OnClickListener{
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_activity);
 
@@ -42,20 +44,19 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
         int id = v.getId();
         switch (id) {
             case R.id.save:
-
-                DBManager bd = new DBManager(this);
-                EditText name = findViewById(R.id.name);
+                DBManager db=new DBManager(this);
+                EditText name=findViewById(R.id.name);
                 String Name=name.getText().toString();
-
-                bd.insertData(Name);
-
+                if(Name.length()!=0){
+                   db.addData(Name);
+                }else{
+                    Toast.makeText(InputActivity.this,"값을 입력해주세요.",Toast.LENGTH_LONG).show();
+                }
                 finish();
                 break;
             case R.id.cancel:
                 finish();
                 break;
         }
-
     }
-
 }

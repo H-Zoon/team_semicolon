@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".InputActivity"></activity>
+        <activity android:name=".InputActivity" />
         <activity
             android:name=".AnyOrientationCaptureActivity"
             android:screenOrientation="fullSensor"
@@ -24,7 +24,8 @@
             android:theme="@style/zxing_CaptureTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".CustomScannerActivity" />
-        <activity android:name=".SettingActivity"></activity>
+        <activity android:name=".SettingAct" />
+        <activity android:name=".ListActivity"></activity>
     </application>
 
 </manifest>

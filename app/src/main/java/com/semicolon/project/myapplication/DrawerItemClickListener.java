@@ -1,5 +1,6 @@
 package com.semicolon.project.myapplication;
-// 사이드메뉴 클래스
+
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.AdapterView;

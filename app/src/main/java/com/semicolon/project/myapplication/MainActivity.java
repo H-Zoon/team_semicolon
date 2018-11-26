@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -92,12 +93,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fab1.setOnClickListener(this);
         fab2.setOnClickListener(this);
 
+        Button test=findViewById(R.id.test);
+        test.setOnClickListener(this);
+
+
     }
 
     @Override
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
+            case R.id.test:
+                Intent intent=new Intent(MainActivity.this,ListActivity.class);
+                startActivity(intent);
             case R.id.fab:
                 anim();
                 Toast.makeText(this, "Floating Action Button", Toast.LENGTH_SHORT).show();

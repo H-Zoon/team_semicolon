@@ -4,93 +4,118 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".InputActivity">
+    tools:context=".InputActivity"
+    android:background="#F3F3F3"
+    >
 
     <EditText
         android:id="@+id/edit_memo"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/text_memo"
+        android:layout_alignTop="@+id/text_memo"
+        android:layout_alignBottom="@+id/text_memo"
+        android:layout_marginLeft="-1dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
         android:layout_toRightOf="@+id/text_memo"
-        android:ems="13"
-        />
+        android:background="#FFFFFF"
+        android:ems="13" />
+
     <TextView
         android:id="@+id/text_memo"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="메모     :"
-        android:textSize="20sp"
+        android:layout_height="60sp"
         android:layout_below="@+id/text_name"
-        android:layout_alignLeft="@+id/text_name"
-        android:layout_marginTop="30sp"
-
-        />
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="308dp"
+        android:background="#FFFFFF"
+        android:gravity="center"
+        android:text="  메모: "
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/text_name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="상품명: "
+        android:layout_height="60sp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="70sp"
+        android:text="  상품명: "
         android:textSize="20sp"
-        android:layout_marginTop="250sp"
-        android:layout_marginLeft="15sp"
+        android:gravity="center"
+        android:background="#FFFFFF"
         />
+
 
     <EditText
         android:id="@+id/name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="250sp"
-        android:inputType="textPersonName"
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
         android:layout_toRightOf="@+id/text_name"
-        android:layout_alignBaseline="@+id/text_name"
+        android:layout_alignTop="@+id/text_name"
+        android:layout_alignBottom="@+id/text_name"
         android:ems="13"
-
+        android:background="#FFFFFF"
         />
 
 
     <TextView
         android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/text_memo"
-        android:text="날짜"
-        android:textSize="20sp"
-        android:layout_marginTop="30sp"
-        android:layout_marginLeft="15sp"
-        />
-
-    <Button
-        android:id="@+id/dateSelect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/edit_memo"
-        android:layout_alignLeft="@+id/date"
+        android:layout_width="fill_parent"
+        android:layout_height="60sp"
+        android:layout_below="@+id/text_name"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="78sp"
-        android:layout_marginTop="10sp"
-        android:text="날짜 선택"
-        />
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="20dp"
+        android:background="#FFFFFF"
+        android:text="  날짜 선택"
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/save"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/edit_memo"
-        android:layout_marginTop="430sp"
-        android:text="저장" />
+        android:layout_marginTop="520sp"
+        android:text="저장"
+        android:background="@drawable/buttonshape"
+        android:textColor="#FFFFFF"
+        android:textSize="17dp"
+        />
 
     <Button
         android:id="@+id/cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/save"
-        android:layout_marginStart="138sp"
-        android:layout_marginTop="430sp"
         android:text="취소"
+        android:background="@drawable/buttonshape2"
+        android:textSize="15dp"
         />
 
+    <TextView
+        android:id="@+id/input_title"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:text="물품 등록"
+        android:gravity="center"
+        android:background="#FFFFFF"
+        android:textSize="17dp"
+        />
 
+    <DatePicker
+
+        android:id="@+id/datePicker"
+        android:layout_width="match_parent"
+        android:layout_height="215dp"
+        android:layout_below="@+id/date"
+        android:layout_alignLeft="@+id/date"
+        android:layout_alignBottom="@+id/edit_memo"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="80dp"
+        android:layout_toEndOf="@+id/date"
+        android:background="#FFFFFF"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner" />
 
 
 </RelativeLayout>
