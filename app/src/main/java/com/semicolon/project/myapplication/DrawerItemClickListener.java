@@ -2,12 +2,14 @@ package com.semicolon.project.myapplication;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
-public class DrawerItemClickListener implements ListView.OnItemClickListener {
+public class DrawerItemClickListener extends AppCompatActivity implements ListView.OnItemClickListener {
 
     private ListView lvNavList;
     private FrameLayout flContainer;
@@ -17,13 +19,13 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
                             long id) {
         switch (position) {
             case 0:
-                flContainer.setBackgroundColor(Color.parseColor("#A52A2A"));
+                //flContainer.setBackgroundColor(Color.parseColor("#A52A2A"));
                 break;
             case 1:
-                flContainer.setBackgroundColor(Color.parseColor("#5F9EA0"));
+                Toast.makeText(getApplicationContext(), "네비메뉴 1번", Toast.LENGTH_LONG).show();
                 break;
             case 2:
-                flContainer.setBackgroundColor(Color.parseColor("#556B2F"));
+                Toast.makeText(getApplicationContext(), "네비메뉴 2번", Toast.LENGTH_LONG).show();
                 break;
             /*case 3:
                 flContainer.setBackgroundColor(Color.parseColor("#FF8C00"));
