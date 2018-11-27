@@ -45,18 +45,31 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
         switch (id) {
             case R.id.save:
                 DBManager db=new DBManager(this);
+                //이름입력
                 EditText name=findViewById(R.id.name);
                 String Name=name.getText().toString();
+                //메모입력
+                EditText memo=findViewById(R.id.edit_memo);
+                String Memo=memo.getText().toString();
+                //날짜입력
+                DatePicker datePicker=findViewById(R.id.datePicker);
+                String Date=onDateChange(datePicker,datePicker.getYear(),datePicker.getMonth(),datePicker.getDayOfMonth());
+
                 if(Name.length()!=0){
-                   db.addData(Name);
+                   db.addData(Name,Memo,Date);
+                   finish();
                 }else{
                     Toast.makeText(InputActivity.this,"값을 입력해주세요.",Toast.LENGTH_LONG).show();
                 }
-                finish();
                 break;
             case R.id.cancel:
                 finish();
                 break;
         }
+    }
+
+    public String onDateChange(DatePicker view,int year,int monthOfYear,int dayOfMonth){
+        String msg=String.format("%d/%d/%d",year,monthOfYear+1,dayOfMonth);
+        return msg;
     }
 }
