@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:clickable="true">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navigation_item_wordbook"
+            android:checked="true"
+            android:title="@string/nav_menu_1"
+            android:clickable="true"/>
+        <item
+            android:id="@+id/navigation_item_camera"
+            android:title="@string/nav_menu_2"
+            android:clickable="true"/>
+        <item
+            android:id="@+id/navigation_item_write"
+            android:title="@string/nav_menu_3"
+            android:clickable="true"/>
+
+        <item
+            android:id="@+id/navigation_item_settings"
+            android:title="@string/nav_menu_4"
+            android:clickable="true"/>
+    </group>
+</menu>
