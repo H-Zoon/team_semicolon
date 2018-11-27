@@ -12,6 +12,7 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
     private ListView lvNavList;
     private FrameLayout flContainer;
 
+
     public void onItemClick(AdapterView<?> adapter, View view, int position,
                             long id) {
         switch (position) {
@@ -32,6 +33,6 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
                 break;
 */
         }
-
+        //drawerLayout.closeDrawer(listView);
     }
 }
