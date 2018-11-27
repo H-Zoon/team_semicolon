@@ -9,6 +9,17 @@
     >
 
     <EditText
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:layout_toRightOf="@+id/text_name"
+        android:layout_alignTop="@+id/text_name"
+        android:layout_alignBottom="@+id/text_name"
+        android:ems="13"
+        android:background="#FFFFFF"
+        />
+
+    <EditText
         android:id="@+id/edit_memo"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -44,18 +55,6 @@
         android:text="  상품명: "
         android:textSize="20sp"
         android:gravity="center"
-        android:background="#FFFFFF"
-        />
-
-
-    <EditText
-        android:id="@+id/name"
-        android:layout_width="match_parent"
-        android:layout_height="40sp"
-        android:layout_toRightOf="@+id/text_name"
-        android:layout_alignTop="@+id/text_name"
-        android:layout_alignBottom="@+id/text_name"
-        android:ems="13"
         android:background="#FFFFFF"
         />
 
