@@ -1,12 +1,17 @@
 package com.semicolon.project.myapplication;
 
+import android.app.FragmentManager;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,18 +31,22 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.text.SimpleDateFormat;
+import android.support.design.widget.NavigationView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener,
+        NavigationView.OnNavigationItemSelectedListener{
 
     private Animation fab_open, fab_close;
     private Boolean isFabOpen = false;
     private FloatingActionButton fab, fab1, fab2;
 
     Toolbar myToolbar;
-    private String[] navItems = {"툴바에 가려지네요 깔~", "보관함", "통계표", "에러 문의"};
+   /* private String[] navItems = {"툴바에 가려지네요 깔~", "보관함", "통계표", "에러 문의"};
     private ListView lvNavList;
     private FrameLayout flContainer;
-
+*/
+   DrawerLayout drawerLayout;
+   NavigationView navigationView;
     //날짜 관련 변수
     TextView printDate;
     long now = System.currentTimeMillis();
@@ -54,28 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                Intent intent=new Intent(this, SettingActivity.class);
-                startActivity(intent);
-                Toast.makeText(getApplicationContext(), "환경설정 버튼 클릭됨", Toast.LENGTH_LONG).show();
-                return true;
 
-            case android.R.id.home:
-                lvNavList.setAdapter(
-                        new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, navItems));
-
-                Toast.makeText(getApplicationContext(), "좌측메뉴 클릭됨", Toast.LENGTH_LONG).show();
-                return true;
-
-            default:
-                //Toast.makeText(getApplicationContext(), "나머지 버튼 클릭됨", Toast.LENGTH_LONG).show();
-                return super.onOptionsItemSelected(item);
-
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,15 +83,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         printDate = (TextView) findViewById(R.id.Date_String);
         printDate.setText(Today);
 
-        //네비게이션 메뉴
+        /*네비게이션 메뉴
         lvNavList = (ListView)findViewById(R.id.lv_activity_main_nav_list);
-        flContainer = (FrameLayout)findViewById(R.id.fl_activity_main_container);
-        lvNavList.setAdapter(
-                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, navItems));
-        lvNavList.setOnItemClickListener(new DrawerItemClickListener());
+        flContainer = (FrameLayout)findViewById(R.id.fl_activity_main_container);*/
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(this);
+       // Log.e("Frag", "Fragment");
 
-
-        //시작
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
 
@@ -117,7 +104,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Intent intent=new Intent(this, SettingActivity.class);
+                startActivity(intent);
+                Toast.makeText(getApplicationContext(), "환경설정 버튼 클릭됨", Toast.LENGTH_LONG).show();
+                return true;
+
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+
+            default:
+                //Toast.makeText(getApplicationContext(), "나머지 버튼 클릭됨", Toast.LENGTH_LONG).show();
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+    @Override
     public void onClick(View v) {
+
         int id = v.getId();
         switch (id) {
             case R.id.fab:
@@ -171,6 +179,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             super.onActivityResult(requestCode, resultCode, null);
         }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        //item.setChecked(true);
+        //drawerLayout.closeDrawers();
+        int id = item.getItemId();
+        // 각 메뉴 클릭시 이뤄지는 이벤트
+        FragmentManager manager = getFragmentManager();
+
+        switch (id) {
+            case R.id.navigation_item_wordbook:
+                Intent intent=new Intent(this, ListActivity.class);
+                startActivity(intent);
+                Toast.makeText(this, "Button1", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.navigation_item_camera:
+                Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
+                break;
+
+            case R.id.navigation_item_write:
+                Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
+                break;
+
+            case R.id.navigation_item_settings:
+                Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
+                break;
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }
 
