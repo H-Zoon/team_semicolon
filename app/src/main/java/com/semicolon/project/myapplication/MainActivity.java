@@ -2,10 +2,12 @@ package com.semicolon.project.myapplication;
 
 import android.app.ProgressDialog;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -25,7 +27,6 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,13 +46,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     Toolbar myToolbar;
 
-
     //json 변수
     private static String TAG = "sql debug";
     private static final String TAG_JSON="webnautes";
     private static final String TAG_NAME = "name";
+    private static final String TAG_Value = "value";
     public static String mJsonString;
-    public String j_name;
+    public static String j_name;
+    public static String j_value;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
 
@@ -61,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Date date = new Date(now);
     SimpleDateFormat sdfNow = new SimpleDateFormat("MM월dd일");
     String Today = sdfNow.format(date);
-
 
     //메뉴 레이아웃 생성 함수
     @Override
@@ -78,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         //툴바
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -166,6 +168,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        //item.setChecked(true);
+        //drawerLayout.closeDrawers();
+        int id = item.getItemId();
+        // 각 메뉴 클릭시 이뤄지는 이벤트
+        FragmentManager manager = getFragmentManager();
+
+        switch (id) {
+            case R.id.navigation_item_wordbook:
+                Intent intent=new Intent(this, ListActivity.class);
+                startActivity(intent);
+                Toast.makeText(this, "Button1", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.navigation_item_camera:
+                Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
+                break;
+
+            case R.id.navigation_item_write:
+                Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
+                break;
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
     public void startQRCode() { //바코드 리딩 함수
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.setCaptureActivity(CustomScannerActivity.class);
@@ -185,6 +217,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.onActivityResult(requestCode, resultCode, null);
         }
     }
+
     private class GetData extends AsyncTask<String, Void, String> {
         ProgressDialog progressDialog;
         @Override
@@ -256,10 +289,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 for(int i=0;i<jsonArray.length();i++) {
                     JSONObject item = jsonArray.getJSONObject(i);
                     j_name = item.getString(TAG_NAME);
+                    j_value = item.getString(TAG_Value);
                 }
 
                 Intent intent = (new Intent(MainActivity.this, InputActivity.class));
-                intent.putExtra("Name", String.valueOf(j_name));
+
+                intent.putExtra("Name", j_name);
+                intent.putExtra("Value", j_value);
                 startActivity(intent);
 
             } catch (JSONException e) {
@@ -267,39 +303,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
-
-
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        //item.setChecked(true);
-        //drawerLayout.closeDrawers();
-        int id = item.getItemId();
-        // 각 메뉴 클릭시 이뤄지는 이벤트
-        FragmentManager manager = getFragmentManager();
-
-        switch (id) {
-            case R.id.navigation_item_wordbook:
-                Intent intent=new Intent(this, ListActivity.class);
-                startActivity(intent);
-                Toast.makeText(this, "Button1", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.navigation_item_camera:
-                Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
-                break;
-
-            case R.id.navigation_item_write:
-                Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
-                break;
-
-            case R.id.navigation_item_settings:
-                Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
-                break;
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 }
-

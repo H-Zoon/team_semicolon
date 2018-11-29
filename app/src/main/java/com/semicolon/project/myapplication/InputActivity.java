@@ -5,15 +5,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class InputActivity extends AppCompatActivity implements View.OnClickListener{
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -23,17 +26,62 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
         ImageView pic = findViewById(R.id.image);
         Button save=findViewById(R.id.save);
         Button cancel=findViewById(R.id.cancel);
+        Spinner spinner = (Spinner)findViewById(R.id.spinner);// 카테고리
 
         save.setOnClickListener(this);
         cancel.setOnClickListener(this);
 
         EditText name=findViewById(R.id.name);
 
-        Intent intent=new Intent(this.getIntent());
-        String intent_name=intent.getStringExtra("j_name");
+        //인텐트로 쓸거
+        String intent_name = "";
+        String intent_value = "";
+
+        //인텐트
+        Intent intent = getIntent();
+
+        intent_name=intent.getStringExtra("Name");
+        intent_value=intent.getStringExtra("Value");
+
         if(intent_name!=null) {
             name.setText(intent_name);
         }
+
+        //input array data
+        final ArrayList<String> list = new ArrayList<>();
+        list.add("유제품");
+        list.add("즉석식품");
+        list.add("가공식품");
+        list.add("제과, 제빵");
+        list.add("과체류");
+        list.add("육류");
+        list.add("해산물");
+        list.add("소스류");
+        list.add("기타");
+
+        //using ArrayAdapter
+        ArrayAdapter spinnerAdapter;
+        spinnerAdapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, list);
+        spinner.setAdapter(spinnerAdapter);
+
+        if(intent_value!=null){
+            int int_v = Integer.parseInt(intent_value);
+            spinner.setSelection(int_v);
+
+        }
+
+        //event listener
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //Toast.makeText(InputActivity.this,"선택된 아이템 : "+spinner.getItemAtPosition(position),Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
     }
 
