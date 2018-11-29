@@ -8,9 +8,10 @@
 
 
     <ListView
-        android:id="@+id/listview"
+        android:id="@+id/mainlist"
         android:layout_width="match_parent"
-        android:layout_height="190dp"
+        android:layout_height="135dp"
+        android:layout_margin="25dp"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp"
         tools:ignore="MissingConstraints"/>
