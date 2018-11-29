@@ -26,18 +26,13 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.TextView;
 import android.support.v7.app.ActionBar;
-
 import com.github.mikephil.charting.animation.Easing;
-import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.*;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -69,7 +64,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FloatingActionButton fab, fab1, fab2;
 
     Toolbar myToolbar;
-    //PieChart pieChart;
+
+    //파이차트 선언
     private PieChart pieChart;
     private float[] yData = { 5, 10, 15, 30, 40 };
     private String[] xData = { "Sony", "Huawei", "LG", "Apple", "Samsung" };
@@ -78,8 +74,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static String TAG = "sql debug";
     private static final String TAG_JSON="webnautes";
     private static final String TAG_NAME = "name";
+    private static final String TAG_Value = "value";
     public static String mJsonString;
-    public String j_name;
+    public static String j_name;
+    public static String j_value;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
 
@@ -90,9 +88,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     SimpleDateFormat sdfNow = new SimpleDateFormat("MM월dd일");
     String Today = sdfNow.format(date);
 
+    //파이차트
     private RelativeLayout mainLayout;
     private PieChart mChart;
     private FrameLayout chartContainer;
+
     //setBackgroundDrawable(R.drawable.background);
     //메뉴 레이아웃 생성 함수
     @Override
@@ -109,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         //툴바
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -357,6 +358,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.onActivityResult(requestCode, resultCode, null);
         }
     }
+
     private class GetData extends AsyncTask<String, Void, String> {
         ProgressDialog progressDialog;
         @Override
@@ -428,10 +430,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 for(int i=0;i<jsonArray.length();i++) {
                     JSONObject item = jsonArray.getJSONObject(i);
                     j_name = item.getString(TAG_NAME);
+                    j_value = item.getString(TAG_Value);
                 }
 
                 Intent intent = (new Intent(MainActivity.this, InputActivity.class));
-                intent.putExtra("Name", String.valueOf(j_name));
+                intent.putExtra("Name", j_name);
+                intent.putExtra("Value", j_value);
                 startActivity(intent);
 
             } catch (JSONException e) {
