@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.semicolon.project.myapplication">
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-feature android:name="android.hardware.camera"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.FLASHLIGHT"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -25,7 +30,9 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".CustomScannerActivity" />
         <activity android:name=".SettingActivity" />
-        <activity android:name=".ListActivity"></activity>
+        <activity android:name=".ListActivity">
+
+        </activity>
     </application>
 
 </manifest>

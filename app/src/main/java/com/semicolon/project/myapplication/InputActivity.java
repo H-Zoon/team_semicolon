@@ -17,6 +17,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class InputActivity extends AppCompatActivity implements View.OnClickListener{
+
+    public static Spinner spinners; //= (Spinner)findViewById(R.id.spinner);// 카테고리
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -26,7 +29,8 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
         ImageView pic = findViewById(R.id.image);
         Button save=findViewById(R.id.save);
         Button cancel=findViewById(R.id.cancel);
-        Spinner spinner = (Spinner)findViewById(R.id.spinner);// 카테고리
+        spinners = (Spinner)findViewById(R.id.spinner);// 카테고리
+
 
         save.setOnClickListener(this);
         cancel.setOnClickListener(this);
@@ -53,7 +57,7 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
         list.add("즉석식품");
         list.add("가공식품");
         list.add("제과, 제빵");
-        list.add("과체류");
+        list.add("과채류");
         list.add("육류");
         list.add("해산물");
         list.add("소스류");
@@ -62,19 +66,20 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
         //using ArrayAdapter
         ArrayAdapter spinnerAdapter;
         spinnerAdapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, list);
-        spinner.setAdapter(spinnerAdapter);
+        spinners.setAdapter(spinnerAdapter);
+
 
         if(intent_value!=null){
             int int_v = Integer.parseInt(intent_value);
-            spinner.setSelection(int_v);
+            spinners.setSelection(int_v);
 
         }
 
         //event listener
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinners.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //Toast.makeText(InputActivity.this,"선택된 아이템 : "+spinner.getItemAtPosition(position),Toast.LENGTH_SHORT).show();
+                Toast.makeText(InputActivity.this,"선택된 아이템 : "+spinners.getItemAtPosition(position),Toast.LENGTH_SHORT).show();
             }
 
             @Override

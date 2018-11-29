@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.TextView;
 import android.support.v7.app.ActionBar;
@@ -43,8 +44,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Animation fab_open, fab_close;
     private Boolean isFabOpen = false;
     private FloatingActionButton fab, fab1, fab2;
-
     Toolbar myToolbar;
+    static Spinner spinners;
 
 
     //json 변수
