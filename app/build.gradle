@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.semicolon.project.myapplication"
-        minSdkVersion 22
+        minSdkVersion 24
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -23,9 +23,7 @@ repositories{
     mavenCentral()
     mavenLocal()
 }
-dependencies {
-    compile 'com.github.PhilJay:MpAndroidChart:v3.0.2'
-}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:28.0.0'
