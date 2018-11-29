@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     Toolbar myToolbar;
 
+
     //json 변수
     private static String TAG = "sql debug";
     private static final String TAG_JSON="webnautes";
@@ -79,7 +80,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         //툴바
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -293,7 +293,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
 
                 Intent intent = (new Intent(MainActivity.this, InputActivity.class));
-
                 intent.putExtra("Name", j_name);
                 intent.putExtra("Value", j_value);
                 startActivity(intent);

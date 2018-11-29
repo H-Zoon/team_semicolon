@@ -18,8 +18,8 @@ public class ListActivity extends AppCompatActivity {
     ListView lv;
     ArrayAdapter<HashMap<String,String>> adapter;
     HashMap<String,String> hashMap=null;
-    ArrayList <HashMap<String,String>> theList = new ArrayList<>();
 
+    ArrayList <HashMap<String,String>> theList = new ArrayList<>();
     static final String TAG_NAME="NAME";
     static final String TAG_MEMO="MEMO";
     static final String TAG_DATE="DATE";

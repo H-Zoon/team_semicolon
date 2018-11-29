@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"><!--xmlns:tools="http://schemas.android.com/tools"  tools:context=".MainActivity"-->
+    android:layout_height="match_parent"
+    android:background="#eaa59e"><!--xmlns:tools="http://schemas.android.com/tools"  tools:context=".MainActivity"-->
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -28,6 +29,9 @@
         android:id="@+id/dl_activity_main_drawer"
         tools:context=".MainActivity" >
 
+
+        <!--헤드라인 레이아웃-->
+
         <!--날짜출력 레이아웃 포함-->
         <ImageView
             android:background="@xml/rectangle"
@@ -40,15 +44,22 @@
             layout="@layout/activity_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left|top"
-            android:layout_marginStart="20dp"
+            android:layout_gravity="center_horizontal|top"
             android:layout_marginTop="70dp" />
+        <!--
         <include
             layout="@layout/today_tip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="300dp"/>
+-->
+        <include
+            layout="@layout/main_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginTop="20dp" />
 
         <!-- 플로팅 버튼-->
         <android.support.design.widget.FloatingActionButton
@@ -89,7 +100,6 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="15sp"
             android:clickable="true"
-
             app:backgroundTint="@android:color/holo_red_light"
             android:src="@drawable/ic_add_black_24dp" />
 

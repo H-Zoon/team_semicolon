@@ -2,6 +2,6 @@
     <string name="app_name">냉장고를 부탁해</string>
     <string name="nav_menu_1">보관함</string>
     <string name="nav_menu_2">통계</string>
-    <string name="nav_menu_3">나머진</string>
+    <string name="nav_menu_3">임시 계발자 옵션</string>
     <string name="nav_menu_4">뭐하지</string>
 </resources>
