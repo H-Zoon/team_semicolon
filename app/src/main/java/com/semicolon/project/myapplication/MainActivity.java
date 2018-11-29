@@ -2,10 +2,12 @@ package com.semicolon.project.myapplication;
 
 import android.app.ProgressDialog;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -25,7 +27,6 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FloatingActionButton fab, fab1, fab2;
 
     Toolbar myToolbar;
-
+    //PieChart pieChart;
 
     //json 변수
     private static String TAG = "sql debug";
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     SimpleDateFormat sdfNow = new SimpleDateFormat("MM월dd일");
     String Today = sdfNow.format(date);
 
-
+    //setBackgroundDrawable(R.drawable.background);
     //메뉴 레이아웃 생성 함수
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -78,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         //툴바
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -164,6 +166,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             fab2.setClickable(true);
             isFabOpen = true;
         }
+    }
+
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        //item.setChecked(true);
+        //drawerLayout.closeDrawers();
+        int id = item.getItemId();
+        // 각 메뉴 클릭시 이뤄지는 이벤트
+        FragmentManager manager = getFragmentManager();
+
+        switch (id) {
+            case R.id.navigation_item_wordbook:
+                Intent intent=new Intent(this, ListActivity.class);
+                startActivity(intent);
+                Toast.makeText(this, "Button1", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.navigation_item_camera:
+                Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
+                break;
+
+            case R.id.navigation_item_write:
+                Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
+                break;
+
+            case R.id.navigation_item_settings:
+                Intent ntent=new Intent(this, TipList.class);
+                startActivity(ntent);
+                Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
+                break;
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     public void startQRCode() { //바코드 리딩 함수
@@ -269,37 +307,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        //item.setChecked(true);
-        //drawerLayout.closeDrawers();
-        int id = item.getItemId();
-        // 각 메뉴 클릭시 이뤄지는 이벤트
-        FragmentManager manager = getFragmentManager();
-
-        switch (id) {
-            case R.id.navigation_item_wordbook:
-                Intent intent=new Intent(this, ListActivity.class);
-                startActivity(intent);
-                Toast.makeText(this, "Button1", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.navigation_item_camera:
-                Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
-                break;
-
-            case R.id.navigation_item_write:
-                Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
-                break;
-
-            case R.id.navigation_item_settings:
-                Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
-                break;
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 }
 

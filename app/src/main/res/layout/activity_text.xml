@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:text="날짜"
         android:textSize="20pt"
-        android:textColor="#D85346"
-        android:id="@+id/Date_String"/>
+        android:textColor="#ffffff"
+        android:id="@+id/Date_String"
+        android:gravity="bottom"/>
 </LinearLayout>
