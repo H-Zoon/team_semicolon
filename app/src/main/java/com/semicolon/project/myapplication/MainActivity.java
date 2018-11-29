@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -20,13 +21,30 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.TextView;
 import android.support.v7.app.ActionBar;
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,6 +55,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
         NavigationView.OnNavigationItemSelectedListener{
@@ -44,9 +63,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Animation fab_open, fab_close;
     private Boolean isFabOpen = false;
     private FloatingActionButton fab, fab1, fab2;
-    Toolbar myToolbar;
-    static Spinner spinners;
 
+    Toolbar myToolbar;
+
+    //파이차트 선언
+    private PieChart pieChart;
+    private float[] yData = { 5, 10, 15, 30, 40 };
+    private String[] xData = { "Sony", "Huawei", "LG", "Apple", "Samsung" };
 
     //json 변수
     private static String TAG = "sql debug";
@@ -66,6 +89,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     SimpleDateFormat sdfNow = new SimpleDateFormat("MM월dd일");
     String Today = sdfNow.format(date);
 
+    //파이차트
+    private RelativeLayout mainLayout;
+    private PieChart mChart;
+    private FrameLayout chartContainer;
+
+    //setBackgroundDrawable(R.drawable.background);
     //메뉴 레이아웃 생성 함수
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -109,8 +138,113 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fab.setOnClickListener(this);
         fab1.setOnClickListener(this);
         fab2.setOnClickListener(this);
+
+        //파이차트
+        // array of graph percentage value
+        mainLayout = (RelativeLayout) findViewById(R.id.mainLayout);
+        chartContainer =(FrameLayout) findViewById(R.id.chartContainer);
+
+        mChart = new PieChart(this);
+        //add pie chart to main layout
+        //mainLayout.addView(mChart);
+        chartContainer.addView(mChart);
+        //mainLayout.setBackgroundColor(Color.LTGRAY);
+        //  mainLayout.setBackgroundColor(Color.parseColor("#55656C"));
+        mainLayout.setBackgroundColor(Color.WHITE);
+
+        //configure pie chart
+        mChart.setUsePercentValues(true);
+        mChart.setDescription(new Description());
+
+        //enable hole and configure
+        mChart.setDrawHoleEnabled(true);
+        // mChart.setHoleColorTransparent(true);
+        mChart.setHoleRadius(7);
+        mChart.setTransparentCircleRadius(10);
+
+        // enable rotation of the chart by touch
+        mChart.setRotation(0);
+        mChart.setRotationEnabled(true);
+
+        //set a chart value selected listener
+        mChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+
+            public void onValueSelected(PieEntry e, int dataSetIndex, Highlight h) {
+                //display message when value selected
+                if (e == null)
+                    return;
+
+                //Toast.makeText(MainActivity.this, xData[e.getXIndex()]+" = "+e.getVal()+"%", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
+        // add Data
+        addData();
+
+        //customize legends
+        Legend l = mChart.getLegend();
+        l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
+        l.setXEntrySpace(7);
+        l.setYEntrySpace(5);
     }
 
+    private void addData(){
+        ArrayList<PieEntry> yVals1 = new ArrayList<PieEntry>();
+
+        for (int i=0; i< yData.length; i++) {
+            yVals1.add(new PieEntry(yData[i], i));
+        }
+        ArrayList<String> xVals = new ArrayList<String>();
+        for (int i=0; i< xData.length; i++) {
+            xVals.add(xData[i]);
+        }
+        //create pie data set
+        PieDataSet dataSet = new PieDataSet(yVals1, "Market Share");
+        dataSet.setSliceSpace(3);
+        dataSet.setSelectionShift(5);
+
+        // add many colors
+        ArrayList<Integer> colors = new ArrayList<Integer>();
+
+        for (int c: ColorTemplate.VORDIPLOM_COLORS)
+            colors.add(c);
+
+        for (int c: ColorTemplate.JOYFUL_COLORS)
+            colors.add(c);
+
+        for (int c: ColorTemplate.COLORFUL_COLORS)
+            colors.add(c);
+        for (int c: ColorTemplate.LIBERTY_COLORS)
+            colors.add(c);
+        for (int c: ColorTemplate.PASTEL_COLORS)
+            colors.add(c);
+
+        colors.add(ColorTemplate.getHoloBlue());
+        dataSet.setColors(colors);
+
+        //instantiate pie data object now
+        PieData data = new PieData(dataSet);
+        data.setValueFormatter(new PercentFormatter());
+        data.setValueTextSize(11f);
+        data.setValueTextColor(Color.GRAY);
+
+        mChart.setData(data);
+
+        //undo all higlights
+        mChart.highlightValues(null);
+
+        // update pie chart
+        mChart.invalidate();
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()) {
@@ -190,6 +324,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.navigation_item_write:
+                Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
+                break;
+
+            case R.id.navigation_item_settings:
+                Intent ntent=new Intent(this, TipList.class);
+                startActivity(ntent);
                 Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
                 break;
         }

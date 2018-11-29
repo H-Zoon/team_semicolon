@@ -33,13 +33,6 @@
         <!--헤드라인 레이아웃-->
 
         <!--날짜출력 레이아웃 포함-->
-        <ImageView
-            android:background="@xml/rectangle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left|top"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="295dp" />
         <include
             layout="@layout/activity_text"
             android:layout_width="wrap_content"
@@ -56,10 +49,20 @@
 -->
         <include
             layout="@layout/main_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|bottom"
-            android:layout_marginTop="20dp" />
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:layout_margin="25dp"
+            android:layout_gravity="center_horizontal|bottom"/>
+        <!--파이 차트-->
+        <include
+            layout="@layout/pie_chart"
+            android:layout_width="match_parent"
+            android:layout_height="210dp"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_marginRight="25dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="150dp" />
+
 
         <!-- 플로팅 버튼-->
         <android.support.design.widget.FloatingActionButton
