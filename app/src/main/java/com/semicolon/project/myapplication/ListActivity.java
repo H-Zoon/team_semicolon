@@ -23,6 +23,7 @@ public class ListActivity extends AppCompatActivity {
     static final String TAG_NAME="NAME";
     static final String TAG_MEMO="MEMO";
     static final String TAG_DATE="DATE";
+    static final String TAG_VALUE="VALUE";
 
 
     @Override
@@ -43,6 +44,7 @@ public class ListActivity extends AppCompatActivity {
                 hashMap.put(TAG_NAME,data.getString(1));
                 hashMap.put(TAG_MEMO,data.getString(2));
                 hashMap.put(TAG_DATE,data.getString(3));
+                hashMap.put(TAG_VALUE,data.getString(4));
 
                 theList.add(hashMap);
             }
@@ -50,7 +52,8 @@ public class ListActivity extends AppCompatActivity {
 
         lv = (ListView) findViewById(R.id.listview);
         //adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, theList);
-        SimpleAdapter simpleAdapter= new SimpleAdapter(this,theList,R.layout.list_item,new String[]{TAG_NAME,TAG_MEMO,TAG_DATE},new int[]{R.id.NAME,R.id.MEMO,R.id.DATE});
+        SimpleAdapter simpleAdapter= new SimpleAdapter(this,theList,R.layout.list_item,new String[]{TAG_NAME,TAG_MEMO,TAG_DATE,TAG_VALUE},
+                new int[]{R.id.NAME,R.id.MEMO,R.id.DATE,R.id.VALUE});
         lv.setAdapter(simpleAdapter);
 
     }

@@ -13,6 +13,13 @@
         android:textSize="20dp"
         />
     <TextView
+        android:id="@+id/VALUE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Content"
+        android:textSize="17dp"
+        />
+    <TextView
         android:id="@+id/DATE"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

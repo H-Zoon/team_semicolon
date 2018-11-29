@@ -326,12 +326,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.navigation_item_write:
                 Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
                 break;
-
-            case R.id.navigation_item_settings:
-                Intent ntent=new Intent(this, TipList.class);
-                startActivity(ntent);
-                Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
-                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

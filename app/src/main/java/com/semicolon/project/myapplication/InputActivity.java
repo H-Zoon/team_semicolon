@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class InputActivity extends AppCompatActivity implements View.OnClickListener{
 
     public static Spinner spinners; //= (Spinner)findViewById(R.id.spinner);// 카테고리
+    public static String save_Value = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
         //인텐트로 쓸거
         String intent_name = "";
         String intent_value = "";
+
 
         //인텐트
         Intent intent = getIntent();
@@ -80,6 +82,7 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(InputActivity.this,"선택된 아이템 : "+spinners.getItemAtPosition(position),Toast.LENGTH_SHORT).show();
+                save_Value = (String)spinners.getItemAtPosition(position);
             }
 
             @Override
@@ -121,7 +124,7 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
                 String Date=onDateChange(datePicker,datePicker.getYear(),datePicker.getMonth(),datePicker.getDayOfMonth());
 
                 if(Name.length()!=0){
-                   db.addData(Name,Memo,Date);
+                   db.addData(Name,Memo,Date,save_Value);
                    finish();
                 }else{
                     Toast.makeText(InputActivity.this,"값을 입력해주세요.",Toast.LENGTH_LONG).show();

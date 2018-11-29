@@ -23,6 +23,7 @@ public class DBManager extends SQLiteOpenHelper {
     private static final String COL2 = "NAME";
     private static final String COL3 = "MEMO";
     private static final String COL4 = "DATE";
+    private static final String COL5 = "VALUE";
 
     // DB관련 객체 선언
     private SQLiteDatabase db; // DB controller
@@ -37,7 +38,8 @@ public class DBManager extends SQLiteOpenHelper {
             // String dropSql = "drop table if exists " + tableName;
             // db.execSQL(dropSql);
 
-            String createSql = " CREATE TABLE " + tableName + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " + "NAME TEXT," + "MEMO TEXT," + "DATE TEXT)";
+            String createSql = " CREATE TABLE " + tableName + " (ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    " " + "NAME TEXT," + "MEMO TEXT," + "DATE TEXT," + "VALUE TEXT)";
 
            // db.execSQL("CREATE TABLE IF NOT EXISTS APinfo (id text PRIMARY KEY AUTOINCREMENT," + " Name text);");
             db.execSQL(createSql);
@@ -49,12 +51,13 @@ public class DBManager extends SQLiteOpenHelper {
             // TODO Auto-generated method stub
         }
 
-        public void addData(String item1,String item2,String item3) {
+        public void addData(String item1,String item2,String item3,String item4) {
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
             contentValues.put(COL2, item1);
             contentValues.put(COL3, item2);
             contentValues.put(COL4, item3);
+            contentValues.put(COL5, item4);
 
             long result = db.insert(tableName, null, contentValues);
 
