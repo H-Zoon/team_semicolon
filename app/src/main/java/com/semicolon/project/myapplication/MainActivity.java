@@ -417,6 +417,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return null;
             }
         }
+
         private void showResult(){
             try {
                 JSONObject jsonObject = new JSONObject(mJsonString);
