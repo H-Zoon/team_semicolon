@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
+import android.util.Log;
 import android.widget.Toast;
 
 import static android.database.sqlite.SQLiteDatabase.openOrCreateDatabase;
@@ -69,20 +70,21 @@ public class DBManager extends SQLiteOpenHelper {
             return data;
         }
 
-        public void deleteData(){
-            String sql = "delete from " + "APinfo" + ";";
-            db.execSQL(sql);
+        public void deleteData(String name){
+            //Log.d("sqlsibal",name);
+            SQLiteDatabase db = this.getWritableDatabase();
+            db.execSQL("DELETE FROM APinfo WHERE NAME='" + name + "';");
+            db.close();
         }
+    // 데이터 정렬
+        public Cursor sort_Date() {
+            SQLiteDatabase db = this.getWritableDatabase();
+            Cursor data = db.rawQuery("SELECT * FROM APinfo order by DATE asc", null);
+            return data;
+    }
 }
 /*
-    // 데이터 추가
-    public void insertData(String Name) {
 
-        ContentValues values = new ContentValues();
-        values.put("Name", Name);
-
-        long result = db.insert(tableName, null, values);
-    }
 
     public Cursor selectAll() {
         String sql = "select * from " + tableName + ";";
