@@ -29,6 +29,8 @@ public class DBManager extends SQLiteOpenHelper {
     // DB관련 객체 선언
     private SQLiteDatabase db; // DB controller
 
+    AlarmControl al=new AlarmControl(); //알람컨트롤
+
     public DBManager(Context context) {
         super(context,dbName, null, dbVersion);
         // TODO Auto-generated constructor stub
@@ -62,6 +64,8 @@ public class DBManager extends SQLiteOpenHelper {
 
             long result = db.insert(tableName, null, contentValues);
 
+            al.AddAlarm(item1);
+
         }
 
         public Cursor getListContents() {
@@ -71,7 +75,6 @@ public class DBManager extends SQLiteOpenHelper {
         }
 
         public void deleteData(String name){
-            //Log.d("sqlsibal",name);
             SQLiteDatabase db = this.getWritableDatabase();
             db.execSQL("DELETE FROM APinfo WHERE NAME='" + name + "';");
             db.close();

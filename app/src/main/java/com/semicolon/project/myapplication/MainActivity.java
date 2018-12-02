@@ -1,7 +1,9 @@
 package com.semicolon.project.myapplication;
 
+
 import android.app.ProgressDialog;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -58,8 +60,15 @@ import java.net.URL;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
         NavigationView.OnNavigationItemSelectedListener{
+
+    public static Context context;
+
+    public static Context getAppContext() {
+        return MainActivity.context;
+    }
 
     private Animation fab_open, fab_close;
     private Boolean isFabOpen = false;
@@ -95,13 +104,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //디비
     DBManager db;
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu, menu);
         return true;
     }
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -109,6 +120,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         db = new DBManager(this);
+
+        MainActivity.context = getApplicationContext();
+
         //툴바
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -219,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }).start();
     }
 
-    public void addData(){
+    private void addData(){
         ArrayList<PieEntry> yVals1 = new ArrayList<PieEntry>();
         int food[] = new int[9];
         food[0] = db.countSelect("유제품");
@@ -279,7 +293,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // update pie chart
         mChart.invalidate();
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()) {
@@ -322,6 +335,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
     public void anim() {
+
         if (isFabOpen) {
             fab1.startAnimation(fab_close);
             fab2.startAnimation(fab_close);
@@ -348,7 +362,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (id) {
             case R.id.navigation_item_wordbook:
-                addData();
                 Intent intent=new Intent(this, ListActivity.class);
                 startActivity(intent);
                 Toast.makeText(this, "Button1", Toast.LENGTH_SHORT).show();
@@ -472,8 +485,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d(TAG, "showResult : ", e);
             }
         }
-    }
-    public PieChart getPie(){
-        return mChart;
     }
 }
