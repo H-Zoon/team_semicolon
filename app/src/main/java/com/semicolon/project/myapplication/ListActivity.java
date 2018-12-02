@@ -3,6 +3,7 @@ package com.semicolon.project.myapplication;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -58,6 +59,7 @@ public class ListActivity extends AppCompatActivity {
         setSupportActionBar(ListToolbar);
         ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setTitle("보관함");
+        ListToolbar.setTitleTextColor(Color.WHITE);
 
         db = new DBManager(this);
         sort_List();

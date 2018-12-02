@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
@@ -23,12 +25,16 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.TextView;
 import android.support.v7.app.ActionBar;
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -51,6 +57,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
         NavigationView.OnNavigationItemSelectedListener{
@@ -89,9 +98,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RelativeLayout mainLayout;
     private PieChart mChart;
     private FrameLayout chartContainer;
-
-
+    //setBackgroundDrawable(R.drawable.background);
     //메뉴 레이아웃 생성 함수
+
+    //디비
+    DBManager db;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -108,6 +119,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        db = new DBManager(this);
+
         MainActivity.context = getApplicationContext();
 
         //툴바
@@ -117,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getSupportActionBar().setElevation(0);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.baseline_dehaze_white_24);
-
+        myToolbar.setTitleTextColor(Color.WHITE);
 
         //날짜출력
         printDate = (TextView) findViewById(R.id.Date_String);
@@ -141,11 +154,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //파이차트
         // array of graph percentage value
+
         mainLayout = (RelativeLayout) findViewById(R.id.pieLayout);
         chartContainer =(FrameLayout) findViewById(R.id.chartContainer);
 
         mChart = new PieChart(this);
+        //add pie chart to main layout
+        //mainLayout.addView(mChart);
         chartContainer.addView(mChart);
+        //mainLayout.setBackgroundColor(Color.LTGRAY);
+        //  mainLayout.setBackgroundColor(Color.parseColor("#55656C"));
         mainLayout.setBackgroundColor(Color.WHITE);
 
         //configure pie chart
@@ -187,27 +205,58 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         addData();
 
         //customize legends
+
         Legend l = mChart.getLegend();
         l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
         l.setXEntrySpace(7);
         l.setYEntrySpace(5);
+        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                for(int i = 0; i < 500; i++) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            addData();
+                        }
+                    });
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                    }
+                }
+            }
+        }).start();
     }
 
     private void addData(){
         ArrayList<PieEntry> yVals1 = new ArrayList<PieEntry>();
-
-        yVals1.add(new PieEntry(18.5f, "유제품"));
-        yVals1.add(new PieEntry(26.7f, "즉석식품"));
-        yVals1.add(new PieEntry(24.0f, "가공식품"));
-        yVals1.add(new PieEntry(30.8f, "제과, 제빵"));
-        yVals1.add(new PieEntry(18.5f, "과채류"));
-        yVals1.add(new PieEntry(18.5f, "육류"));
-        yVals1.add(new PieEntry(18.5f, "해산물"));
-        yVals1.add(new PieEntry(18.5f, "소스류"));
-        yVals1.add(new PieEntry(18.5f, "기타"));
-
+        int food[] = new int[9];
+        food[0] = db.countSelect("유제품");
+        food[1] = db.countSelect("즉석식품");
+        food[2] = db.countSelect("가공식품");
+        food[3] = db.countSelect("제과, 제빵");
+        food[4] = db.countSelect("과채류");
+        food[5] = db.countSelect("육류");
+        food[6] = db.countSelect("해산물");
+        food[7] = db.countSelect("소스류");
+        food[8] = db.countSelect("기타");
+        yVals1.add(new PieEntry(food[0], "유제품"));
+        yVals1.add(new PieEntry(food[1], "즉석식품"));
+        yVals1.add(new PieEntry(food[2], "가공식품"));
+        yVals1.add(new PieEntry(food[3], "제과, 제빵"));
+        yVals1.add(new PieEntry(food[4], "과채류"));
+        yVals1.add(new PieEntry(food[5], "육류"));
+        yVals1.add(new PieEntry(food[6], "해산물"));
+        yVals1.add(new PieEntry(food[7], "소스류"));
+        yVals1.add(new PieEntry(food[8], "기타"));
         //create pie data set
-        PieDataSet dataSet = new PieDataSet(yVals1, "Market Share");
+
+        PieDataSet dataSet = new PieDataSet(yVals1, "");
         dataSet.setSliceSpace(3);
         dataSet.setSelectionShift(5);
 
@@ -216,8 +265,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         for (int c: ColorTemplate.VORDIPLOM_COLORS)
             colors.add(c);
+
         for (int c: ColorTemplate.JOYFUL_COLORS)
             colors.add(c);
+
         for (int c: ColorTemplate.COLORFUL_COLORS)
             colors.add(c);
         for (int c: ColorTemplate.LIBERTY_COLORS)
