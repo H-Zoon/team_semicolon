@@ -1,7 +1,10 @@
 package com.semicolon.project.myapplication;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -43,6 +46,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,6 +61,12 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
         NavigationView.OnNavigationItemSelectedListener{
+
+    public static Context context;
+
+    public static Context getAppContext() {
+        return MainActivity.context;
+    }
 
     private Animation fab_open, fab_close;
     private Boolean isFabOpen = false;
@@ -108,6 +118,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        MainActivity.context = getApplicationContext();
 
         //툴바
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -193,6 +205,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
         l.setXEntrySpace(7);
         l.setYEntrySpace(5);
+
     }
 
     private void addData(){

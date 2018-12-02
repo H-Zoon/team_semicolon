@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.semicolon.project.myapplication">
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
 
     <application
         android:allowBackup="false"
@@ -20,7 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".MainActivity"/>
         <activity android:name=".InputActivity" />
         <activity
@@ -32,6 +32,7 @@
         <activity android:name=".CustomScannerActivity" />
         <activity android:name=".SettingActivity" />
         <activity android:name=".ListActivity"></activity>
+        <receiver android:name=".AlarmReceiver" android:process=":remote" />
     </application>
 
 </manifest>
