@@ -1,10 +1,17 @@
 package com.semicolon.project.myapplication;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
+import android.support.v4.view.GravityCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,6 +30,8 @@ public class ListActivity extends AppCompatActivity {
     ArrayAdapter<HashMap<String,String>> adapter;
     HashMap<String,String> hashMap=null;
 
+    Toolbar ListToolbar;
+
     ArrayList <HashMap<String,String>> theList = new ArrayList<>();
     static final String TAG_ID= "ID";
     static final String TAG_NAME="NAME";
@@ -32,11 +41,23 @@ public class ListActivity extends AppCompatActivity {
     static SimpleAdapter simpleAdapter;
     static Integer cursor_integer = 0;
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.list_menu, menu);
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+
+        //리스트 레이아웃 툴바
+        ListToolbar = (Toolbar) findViewById(R.id.list_toolbar);
+        setSupportActionBar(ListToolbar);
+        ActionBar actionBar = getSupportActionBar();
+        getSupportActionBar().setTitle("보관함");
 
         db = new DBManager(this);
         sort_List();
@@ -78,23 +99,47 @@ public class ListActivity extends AppCompatActivity {
                 } );
                 AlertDialog al = alertDialog.create ();
                 al.show ();
+
+
             }
         } );
 
+
         //끝
+    }
 
-        Button button_sort = (Button) findViewById(R.id.button);
-
-        button_sort.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                // 임박순 정렬
                 cursor_integer = 1;
                 sort_List();
                 simpleAdapter.notifyDataSetChanged();
-            }
-        });
 
+                Toast.makeText(getApplicationContext(), "임박순 버튼 클릭됨", Toast.LENGTH_LONG).show();
+                return true;
+
+            case R.id.action_settings2:
+                //등록순 정렬
+                cursor_integer = 0;
+                sort_List();
+                simpleAdapter.notifyDataSetChanged();
+
+                Toast.makeText(getApplicationContext(), "등록순 버튼 클릭됨", Toast.LENGTH_LONG).show();
+                return true;
+
+            case R.id.action_settings3:
+                //이름순 정렬
+
+                Toast.makeText(getApplicationContext(), "이름순 버튼 클릭됨", Toast.LENGTH_LONG).show();
+                return true;
+
+            default:
+                //Toast.makeText(getApplicationContext(), "나머지 버튼 클릭됨", Toast.LENGTH_LONG).show();
+                return super.onOptionsItemSelected(item);
+
+        }
     }
-
     public void please(String name) {
         db.deleteData (name);
     }

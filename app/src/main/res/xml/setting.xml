@@ -4,7 +4,7 @@
         android:key="message"
         android:switchTextOff="OFF"
         android:switchTextOn="ON"
-        android:title="메시지 알림"
+        android:title="푸시 알림"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btn_noti"/>
@@ -20,7 +20,7 @@
         android:key="sound"
         android:switchTextOff="OFF"
         android:switchTextOn="ON"
-        android:title="소리"/>
+        android:title="알림 소리"/>
     <ListPreference
         android:entries="@array/array_voice"
         android:entryValues="@array/array_voice"
