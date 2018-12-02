@@ -106,30 +106,31 @@ public class ListActivity extends AppCompatActivity {
 
 
         //끝
-/*
-        Button button_sort = (Button) findViewById(R.id.button);
-
-        button_sort.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                cursor_integer = 1;
-                sort_List();
-                simpleAdapter.notifyDataSetChanged();
-            }
-        });
-*/
     }
 
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()) {
             case R.id.action_settings:
+                // 임박순 정렬
+                cursor_integer = 1;
+                sort_List();
+                simpleAdapter.notifyDataSetChanged();
+
                 Toast.makeText(getApplicationContext(), "임박순 버튼 클릭됨", Toast.LENGTH_LONG).show();
                 return true;
 
             case R.id.action_settings2:
+                //등록순 정렬
+                cursor_integer = 0;
+                sort_List();
+                simpleAdapter.notifyDataSetChanged();
+
                 Toast.makeText(getApplicationContext(), "등록순 버튼 클릭됨", Toast.LENGTH_LONG).show();
                 return true;
 
             case R.id.action_settings3:
+                //이름순 정렬
+
                 Toast.makeText(getApplicationContext(), "이름순 버튼 클릭됨", Toast.LENGTH_LONG).show();
                 return true;
 
