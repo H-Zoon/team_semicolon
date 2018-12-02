@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private PieChart mChart;
     private FrameLayout chartContainer;
     private float[] yData = { 5, 10, 15, 30, 40 };
-    private String[] xData = { "Sony", "Huawei", "LG", "Apple", "Samsung" };
     //setBackgroundDrawable(R.drawable.background);
     //메뉴 레이아웃 생성 함수
 
