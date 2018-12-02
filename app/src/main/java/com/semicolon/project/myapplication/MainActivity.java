@@ -1,13 +1,10 @@
 package com.semicolon.project.myapplication;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
+
 import android.app.ProgressDialog;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
@@ -26,16 +23,12 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.TextView;
 import android.support.v7.app.ActionBar;
-import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -48,7 +41,6 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,7 +51,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
         NavigationView.OnNavigationItemSelectedListener{
@@ -99,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private PieChart mChart;
     private FrameLayout chartContainer;
 
-    //setBackgroundDrawable(R.drawable.background);
+
     //메뉴 레이아웃 생성 함수
 
     @Override
@@ -150,15 +141,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //파이차트
         // array of graph percentage value
-        mainLayout = (RelativeLayout) findViewById(R.id.mainLayout);
+        mainLayout = (RelativeLayout) findViewById(R.id.pieLayout);
         chartContainer =(FrameLayout) findViewById(R.id.chartContainer);
 
         mChart = new PieChart(this);
-        //add pie chart to main layout
-        //mainLayout.addView(mChart);
         chartContainer.addView(mChart);
-        //mainLayout.setBackgroundColor(Color.LTGRAY);
-        //  mainLayout.setBackgroundColor(Color.parseColor("#55656C"));
         mainLayout.setBackgroundColor(Color.WHITE);
 
         //configure pie chart
@@ -229,10 +216,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         for (int c: ColorTemplate.VORDIPLOM_COLORS)
             colors.add(c);
-
         for (int c: ColorTemplate.JOYFUL_COLORS)
             colors.add(c);
-
         for (int c: ColorTemplate.COLORFUL_COLORS)
             colors.add(c);
         for (int c: ColorTemplate.LIBERTY_COLORS)
