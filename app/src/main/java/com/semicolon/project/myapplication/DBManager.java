@@ -82,7 +82,16 @@ public class DBManager extends SQLiteOpenHelper {
             Cursor data = db.rawQuery("SELECT * FROM APinfo order by DATE asc", null);
             return data;
     }
+    public int countSelect(String value){
+        SQLiteDatabase db= this.getWritableDatabase ();
+        Cursor data= db.rawQuery ("select * from APinfo where VALUE = '" + value + "'", null);
+        int count=0;
+        count=data.getCount ();
+        return count;
+    }
 }
+
+
 /*
 
 

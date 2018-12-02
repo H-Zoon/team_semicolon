@@ -56,7 +56,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
-
+import java.util.Timer;
+import java.util.TimerTask;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
         NavigationView.OnNavigationItemSelectedListener{
 
@@ -88,9 +89,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RelativeLayout mainLayout;
     private PieChart mChart;
     private FrameLayout chartContainer;
-    private float[] yData = { 5, 10, 15, 30, 40 };
     //setBackgroundDrawable(R.drawable.background);
     //메뉴 레이아웃 생성 함수
+
+    //디비
+    DBManager db;
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -98,15 +102,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         menuInflater.inflate(R.menu.menu, menu);
         return true;
     }
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        db = new DBManager(this);
         //툴바
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -114,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getSupportActionBar().setElevation(0);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.baseline_dehaze_white_24);
-
+        myToolbar.setTitleTextColor(Color.WHITE);
 
         //날짜출력
         printDate = (TextView) findViewById(R.id.Date_String);
@@ -196,28 +198,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         l.setYEntrySpace(5);
         l.setOrientation(Legend.LegendOrientation.VERTICAL);
 
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                for(int i = 0; i < 500; i++) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            addData();
+                        }
+                    });
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                    }
+                }
+            }
+        }).start();
     }
 
-    private void addData(){
+    public void addData(){
         ArrayList<PieEntry> yVals1 = new ArrayList<PieEntry>();
-        /*
-        for (int i=0; i< yData.length; i++) {
-            yVals1.add(new PieEntry(yData[i], i));
-        }
-        ArrayList<String> xVals = new ArrayList<String>();
-        for (int i=0; i< xData.length; i++) {
-            xVals.add(xData[i]);
-        }*/
-
-        yVals1.add(new PieEntry(18.5f, "유제품"));
-        yVals1.add(new PieEntry(26.7f, "즉석식품"));
-        yVals1.add(new PieEntry(24.0f, "가공식품"));
-        yVals1.add(new PieEntry(30.8f, "제과, 제빵"));
-        yVals1.add(new PieEntry(18.5f, "과채류"));
-        yVals1.add(new PieEntry(18.5f, "육류"));
-        yVals1.add(new PieEntry(18.5f, "해산물"));
-        yVals1.add(new PieEntry(18.5f, "소스류"));
-        yVals1.add(new PieEntry(18.5f, "기타"));
+        int food[] = new int[9];
+        food[0] = db.countSelect("유제품");
+        food[1] = db.countSelect("즉석식품");
+        food[2] = db.countSelect("가공식품");
+        food[3] = db.countSelect("제과, 제빵");
+        food[4] = db.countSelect("과채류");
+        food[5] = db.countSelect("육류");
+        food[6] = db.countSelect("해산물");
+        food[7] = db.countSelect("소스류");
+        food[8] = db.countSelect("기타");
+        yVals1.add(new PieEntry(food[0], "유제품"));
+        yVals1.add(new PieEntry(food[1], "즉석식품"));
+        yVals1.add(new PieEntry(food[2], "가공식품"));
+        yVals1.add(new PieEntry(food[3], "제과, 제빵"));
+        yVals1.add(new PieEntry(food[4], "과채류"));
+        yVals1.add(new PieEntry(food[5], "육류"));
+        yVals1.add(new PieEntry(food[6], "해산물"));
+        yVals1.add(new PieEntry(food[7], "소스류"));
+        yVals1.add(new PieEntry(food[8], "기타"));
         //create pie data set
 
         PieDataSet dataSet = new PieDataSet(yVals1, "");
@@ -257,6 +279,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // update pie chart
         mChart.invalidate();
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()) {
@@ -299,7 +322,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
     public void anim() {
-
         if (isFabOpen) {
             fab1.startAnimation(fab_close);
             fab2.startAnimation(fab_close);
@@ -326,6 +348,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (id) {
             case R.id.navigation_item_wordbook:
+                addData();
                 Intent intent=new Intent(this, ListActivity.class);
                 startActivity(intent);
                 Toast.makeText(this, "Button1", Toast.LENGTH_SHORT).show();
@@ -449,5 +472,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d(TAG, "showResult : ", e);
             }
         }
+    }
+    public PieChart getPie(){
+        return mChart;
     }
 }

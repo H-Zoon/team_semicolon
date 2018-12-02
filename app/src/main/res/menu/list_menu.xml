@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
     <!-- "Mark Favorite", should appear as action button if possible -->
     <item
         android:id="@+id/action_settings"
-        android:title="임박날짜순"
+        android:title="정렬"
         app:showAsAction="never"/>
-
-    <!-- Settings, should always be in the overflow -->
     <item android:id="@+id/action_settings2"
         android:title="등록순"
         app:showAsAction="never"/>
@@ -15,5 +14,8 @@
     <item android:id="@+id/action_settings3"
         android:title="이름순"
         app:showAsAction="never"/>
+
+    <!-- Settings, should always be in the overflow -->
+
 
 </menu>
