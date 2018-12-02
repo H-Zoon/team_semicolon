@@ -57,6 +57,7 @@ public class DBManager extends SQLiteOpenHelper {
         public void addData(String item1,String item2,String item3,String item4) {
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
+            //contentValues.put(COL1, "");
             contentValues.put(COL2, item1);
             contentValues.put(COL3, item2);
             contentValues.put(COL4, item3);
@@ -64,7 +65,8 @@ public class DBManager extends SQLiteOpenHelper {
 
             long result = db.insert(tableName, null, contentValues);
 
-            al.AddAlarm(item1);
+            Cursor c = Search_data(item1);
+            al.AddAlarm(c);
 
         }
 
@@ -79,12 +81,20 @@ public class DBManager extends SQLiteOpenHelper {
             db.execSQL("DELETE FROM APinfo WHERE NAME='" + name + "';");
             db.close();
         }
-    // 데이터 정렬
+
+        // 데이터 날짜정렬
         public Cursor sort_Date() {
             SQLiteDatabase db = this.getWritableDatabase();
             Cursor data = db.rawQuery("SELECT * FROM APinfo order by DATE asc", null);
             return data;
     }
+
+        public Cursor Search_data(String value) {
+            SQLiteDatabase db = this.getWritableDatabase();
+            Cursor data = db.rawQuery( "SELECT * FROM APinfo WHERE NAME=" + "'" + value + "'" , null);;
+
+            return data;
+        }
 }
 /*
 

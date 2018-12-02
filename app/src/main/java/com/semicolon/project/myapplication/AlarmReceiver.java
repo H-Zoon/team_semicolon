@@ -10,9 +10,8 @@ import android.util.Log;
 public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("aaaa", "외않대? ");
-        String text = intent.getStringExtra("text");
-        int id = intent.getIntExtra("id", 0);
+        String text = intent.getStringExtra("Name");
+        int id = intent.getIntExtra("ID", 0);
         Notification.Builder mBuilder =
                 new Notification.Builder(context)
                         .setSmallIcon(R.drawable.ic_launcher_foreground)
