@@ -3,6 +3,8 @@ package com.semicolon.project.myapplication;
 import android.app.ProgressDialog;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
@@ -64,11 +66,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     Toolbar myToolbar;
 
-    //파이차트 선언
-    private PieChart pieChart;
-    private float[] yData = { 5, 10, 15, 30, 40 };
-    private String[] xData = { "Sony", "Huawei", "LG", "Apple", "Samsung" };
-
     //json 변수
     private static String TAG = "sql debug";
     private static final String TAG_JSON="webnautes";
@@ -91,9 +88,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RelativeLayout mainLayout;
     private PieChart mChart;
     private FrameLayout chartContainer;
-
+    private float[] yData = { 5, 10, 15, 30, 40 };
+    private String[] xData = { "Sony", "Huawei", "LG", "Apple", "Samsung" };
     //setBackgroundDrawable(R.drawable.background);
     //메뉴 레이아웃 생성 함수
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -113,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         ActionBar actionBar = getSupportActionBar();
+        getSupportActionBar().setElevation(0);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.baseline_dehaze_white_24);
 
@@ -139,7 +139,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //파이차트
         // array of graph percentage value
-        mainLayout = (RelativeLayout) findViewById(R.id.mainLayout);
+
+        mainLayout = (RelativeLayout) findViewById(R.id.pieLayout);
         chartContainer =(FrameLayout) findViewById(R.id.chartContainer);
 
         mChart = new PieChart(this);
@@ -157,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //enable hole and configure
         mChart.setDrawHoleEnabled(true);
         // mChart.setHoleColorTransparent(true);
-        mChart.setHoleRadius(7);
+        mChart.setHoleRadius(30);
         mChart.setTransparentCircleRadius(10);
 
         // enable rotation of the chart by touch
@@ -189,24 +190,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         addData();
 
         //customize legends
+
         Legend l = mChart.getLegend();
         l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
         l.setXEntrySpace(7);
         l.setYEntrySpace(5);
+        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+
     }
 
     private void addData(){
         ArrayList<PieEntry> yVals1 = new ArrayList<PieEntry>();
-
+        /*
         for (int i=0; i< yData.length; i++) {
             yVals1.add(new PieEntry(yData[i], i));
         }
         ArrayList<String> xVals = new ArrayList<String>();
         for (int i=0; i< xData.length; i++) {
             xVals.add(xData[i]);
-        }
+        }*/
+
+        yVals1.add(new PieEntry(18.5f, "유제품"));
+        yVals1.add(new PieEntry(26.7f, "즉석식품"));
+        yVals1.add(new PieEntry(24.0f, "가공식품"));
+        yVals1.add(new PieEntry(30.8f, "제과, 제빵"));
+        yVals1.add(new PieEntry(18.5f, "과채류"));
+        yVals1.add(new PieEntry(18.5f, "육류"));
+        yVals1.add(new PieEntry(18.5f, "해산물"));
+        yVals1.add(new PieEntry(18.5f, "소스류"));
+        yVals1.add(new PieEntry(18.5f, "기타"));
         //create pie data set
-        PieDataSet dataSet = new PieDataSet(yVals1, "Market Share");
+
+        PieDataSet dataSet = new PieDataSet(yVals1, "");
         dataSet.setSliceSpace(3);
         dataSet.setSelectionShift(5);
 
