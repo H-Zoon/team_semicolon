@@ -135,9 +135,13 @@ public class ListActivity extends AppCompatActivity {
 
                 Toast.makeText(getApplicationContext(), "이름순 버튼 클릭됨", Toast.LENGTH_LONG).show();
                 return true;
+
             case R.id.action_delete:
                 //삭제 버튼
-
+                db.Delete_data();
+                theList.clear();
+                simpleAdapter.notifyDataSetChanged();
+                Toast.makeText(getApplicationContext(), "전체삭제 버튼 클릭됨", Toast.LENGTH_LONG).show();
                 return true;
             default:
                 //Toast.makeText(getApplicationContext(), "나머지 버튼 클릭됨", Toast.LENGTH_LONG).show();

@@ -85,13 +85,22 @@ public class DBManager extends SQLiteOpenHelper {
             SQLiteDatabase db = this.getWritableDatabase();
             Cursor data = db.rawQuery("SELECT * FROM APinfo order by DATE asc", null);
             return data;
-    }
+        }
 
         public Cursor Search_data(String value) {
             SQLiteDatabase db = this.getWritableDatabase();
             Cursor data = db.rawQuery( "SELECT * FROM APinfo WHERE NAME=" + "'" + value + "'" , null);;
             return data;
+        }
+
+        public void Delete_data(){
+            SQLiteDatabase db = this.getWritableDatabase();
+            // db.rawQuery("DELETE FROM APinfo ", null, null);
+            //String sql = "DELETE FROM APinfo ";
+            // db.execSQL(sql);
+            db.delete("APinfo", null, null);
     }
+
     public int countSelect(String value){
         SQLiteDatabase db= this.getWritableDatabase ();
         Cursor data= db.rawQuery ("select * from APinfo where VALUE = '" + value + "'", null);
@@ -100,64 +109,3 @@ public class DBManager extends SQLiteOpenHelper {
         return count;
     }
 }
-
-
-/*
-
-
-    public Cursor selectAll() {
-        String sql = "select * from " + tableName + ";";
-        Cursor results = db.rawQuery(sql, null);
-
-        return results;
-    }
-}
-
-/*
-    // 데이터 삭제(안돌아가면 id 삽입)
-    public void removeData() {
-        String sql = "delete from " + "APinfo" + ";";
-        db.execSQL(sql);
-    }
-/*
-    public Cursor selectData() {
-        String sql = "select * from " + tableName + ";";
-        Cursor cursor = db.rawQuery(sql, null);
-
-        // result(Cursor 객체)가 비어 있으면 false 리턴
-        while (cursor.moveToFirst()) {
-            String name = cursor.getString(0);
-        }
-        cursor.close();
-        return null;
-    }
-/*
-     public void updateData(APinfo info, int index) {
-        String sql = "update " + tableName + " set SSID = '" + info.getSSID()
-                + "', capabilities = " + info.getCapabilities()
-                + ", passwd = '" + info.getPasswd() + "' where id = " + index
-                + ";";
-        db.execSQL(sql);
-    }
-
-
-    // 데이터 전체 검색
-    public Cursor selectAll() {
-        String sql = "select * from " + tableName + ";";
-        Cursor results = db.rawQuery(sql, null);
-
-        results.moveToFirst();
-        ArrayList<apinfo> infos = new ArrayList<apinfo>();
-
-        while (!results.isAfterLast()) {
-            APinfo info = new APinfo(results.getInt(0), results.getString(1),
-                    results.getInt(2), results.getString(3));
-            infos.add(info);
-            results.moveToNext();
-        }
-        results.close();
-        return infos;
-    }*/
-
-
-
