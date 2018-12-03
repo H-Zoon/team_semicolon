@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -87,7 +88,9 @@ public class ListActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog,int whichButton){
                         switch (whichButton){
                             case 0:
-                                Toast.makeText ( getApplicationContext (),"레시피를 넣고싶어염",Toast.LENGTH_LONG ).show ();
+                                Uri webpage = Uri.parse("https://www.google.co.kr/search?q=" + d_name + " 레시피");
+                                Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
+                                startActivity(webIntent);
                                 break;
                             case 1:
                                 db.deleteData (d_name);
@@ -105,8 +108,6 @@ public class ListActivity extends AppCompatActivity {
             }
         });
 
-
-        //끝
     }
 
     public boolean onOptionsItemSelected(MenuItem item){

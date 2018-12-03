@@ -26,7 +26,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                         .setAutoCancel(true)
                         .setSound(defaultSoundUri)
                         .setContentTitle("유통기한 임박!!")
-                        .setContentText(text+"식품의 유통기한이 10초 남았습니다.");
+                        .setContentText(text+"식품의 유통기한이 얼마남지 않았습니다.");
 
         NotificationManager mNotificationManager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
