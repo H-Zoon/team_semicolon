@@ -225,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         l.setYEntrySpace(5);
         l.setOrientation(Legend.LegendOrientation.VERTICAL);
 
-        final TextView talk= findViewById ( R.id.talk );
+        final TextView talk= findViewById ( R.id.nentalk );
 
         new Thread(new Runnable() {
 
@@ -258,10 +258,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         while (c.moveToNext()) {
             name = c.getString ( 1 );
+            name = name + "(이)가 안에서 썩고있어요..엉엉...ㅠㅜ";
             break;
         }
         if(name==null){
-            name="등록된 상품이 없습니다.";
+            name="냉장고가 비었어요 냉장이를 채워주세요~";
         }
 
         return name;

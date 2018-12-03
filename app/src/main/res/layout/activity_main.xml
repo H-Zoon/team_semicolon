@@ -33,31 +33,6 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="300dp"/>
 -->
-        <FrameLayout
-            android:layout_height="fill_parent"
-            android:layout_width="fill_parent">
-
-
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="200dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="370dp"
-                android:src="@drawable/fridgetalk"
-
-                />
-        <!-- 냉장이의 말-->
-            <TextView
-                android:id="@+id/talk"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:text="냉장이가 말합니다"
-                android:layout_marginStart="70dp"
-                android:layout_marginTop="450dp"
-                />
-
-        </FrameLayout>
-
         <!--파이 차트-->
         <include
             layout="@layout/pie_chart"
@@ -68,6 +43,13 @@
             android:layout_marginLeft="25dp"
             android:layout_marginTop="150dp"
             android:background="@drawable/roundconer"/>
+        <!--냉장이-->
+        <include
+            layout="@layout/frezetalk"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_gravity="bottom|end"
+            />
 
         <!-- 플로팅 버튼-->
         <android.support.design.widget.FloatingActionButton
@@ -147,6 +129,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:clickable="true"
-        app:menu="@menu/drawer"></android.support.design.widget.NavigationView>
+        app:menu="@menu/drawer"/>
 
 </android.support.v4.widget.DrawerLayout>
