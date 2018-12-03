@@ -78,33 +78,32 @@ public class ListActivity extends AppCompatActivity {
                HashMap selection = (HashMap)lv.getItemAtPosition ( position );
                 final String d_name=(String)selection.get(TAG_NAME);
 
-                Toast.makeText(getApplicationContext(), d_name, Toast.LENGTH_LONG).show();
+                CharSequence info[]= new CharSequence[]{"레시피보기","삭제하기"};
 
                 final AlertDialog.Builder alertDialog = new AlertDialog.Builder (ListActivity.this);
-                alertDialog.setTitle ( "삭제" )
-                        .setMessage ( "삭제하시겠습니까?" )
-                        .setPositiveButton ( "네" , new DialogInterface.OnClickListener () {
-                            @Override
-                            public void onClick(DialogInterface dialog , int which) {
-                                //please(d_name);
+                alertDialog.setTitle ( "리스트 옵션" );
+                alertDialog.setItems( info, new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog,int whichButton){
+                        switch (whichButton){
+                            case 0:
+                                Toast.makeText ( getApplicationContext (),"레시피를 넣고싶어염",Toast.LENGTH_LONG ).show ();
+                                break;
+                            case 1:
                                 db.deleteData (d_name);
                                 sort_List();
                                 simpleAdapter.notifyDataSetChanged();
                                 Toast.makeText ( getApplicationContext (),"삭제되었습니다.",Toast.LENGTH_LONG ).show ();
-                            }
-                        });
-                alertDialog.setNegativeButton ( "아니요" , new DialogInterface.OnClickListener () {
-                    @Override
-                    public void onClick(DialogInterface dialog , int which) {
-                        dialog.cancel ();
+                        }
+                        dialog.dismiss ();
                     }
-                } );
+                });
                 AlertDialog al = alertDialog.create ();
                 al.show ();
 
 
             }
-        } );
+        });
 
 
         //끝
