@@ -100,8 +100,6 @@ public class ListActivity extends AppCompatActivity {
                 });
                 AlertDialog al = alertDialog.create ();
                 al.show ();
-
-
             }
         });
 
@@ -114,7 +112,6 @@ public class ListActivity extends AppCompatActivity {
                 cursor_integer = 1;
                 sort_List();
                 simpleAdapter.notifyDataSetChanged();
-
                 Toast.makeText(getApplicationContext(), "임박순 정렬", Toast.LENGTH_LONG).show();
                 return true;
 

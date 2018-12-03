@@ -40,17 +40,7 @@ public class AlarmControl extends MainActivity {
 //시간 저장
 
         String[] Data_arr = Date.split("/");
-/*
-        if (Data_arr != null)
-        {
-            int nCnt = Data_arr.length;
 
-            for (int i=0; i<nCnt; ++i)
-            {
-                Log.d("TAG", "arr[" + i + "] = " + Data_arr[i]);
-            }
-        }
-*/
         calendar.set(Calendar.YEAR, Integer.parseInt(Data_arr[0]));
         calendar.set(Calendar.MONTH, Integer.parseInt(Data_arr[1])-1);
         calendar.set(Calendar.DATE, Integer.parseInt(Data_arr[2]));
@@ -64,13 +54,38 @@ public class AlarmControl extends MainActivity {
 
     }
 
-    /*public void DelAlarm() {
-        AlarmManager alarm = (AlarmManager) this.getSystemService(ALARM_SERVICE);
-        Intent intent = new Intent(notifyTest.this, AlarmReceiver.class);
-        intent.putExtra("text", "1st text");
-        intent.putExtra("id", 11111);
-        PendingIntent pender = PendingIntent.getBroadcast(notifyTest.this, 1, intent, 1);
-        alarm.cancel(pender);
-    }*/
+    public void DelAlarm(Cursor c) {
+        int id = 0;
+        String name = "";
+
+        while(c.moveToNext()){
+            id = c.getInt(0);
+            name = c.getString(1);
+        }
+
+        AlarmManager alarm = (AlarmManager)context.getSystemService(context.ALARM_SERVICE);
+        Intent intent = new Intent(context, AlarmReceiver.class);
+        intent.putExtra("ID", id);
+        intent.putExtra("Name", name);
+        PendingIntent sender = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        alarm.cancel(sender);
+    }
+
+    public void DelAlarm_All(Cursor c) {
+        int id = 0;
+        String name = "";
+
+        while(c.moveToNext()){
+            id = c.getInt(0);
+            name = c.getString(1);
+
+            AlarmManager alarm = (AlarmManager)context.getSystemService(context.ALARM_SERVICE);
+            Intent intent = new Intent(context, AlarmReceiver.class);
+            intent.putExtra("ID", id);
+            intent.putExtra("Name", name);
+            PendingIntent sender = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+            alarm.cancel(sender);
+        }
+    }
 
 }

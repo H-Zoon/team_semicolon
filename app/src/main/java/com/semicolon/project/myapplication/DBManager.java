@@ -85,19 +85,22 @@ public class DBManager extends SQLiteOpenHelper {
 
         public Cursor Search_data(String value) {
             SQLiteDatabase db = this.getWritableDatabase();
-            Cursor data = db.rawQuery( "SELECT * FROM APinfo WHERE NAME=" + "'" + value + "'" , null);;
+            Cursor data = db.rawQuery( "SELECT * FROM APinfo WHERE NAME=" + "'" + value + "'" , null);
             return data;
         }
 
         public void deleteData(String name){
             SQLiteDatabase db = this.getWritableDatabase();
+            al.DelAlarm(Search_data(name));
             db.execSQL("DELETE FROM APinfo WHERE NAME='" + name + "';");
             db.close();
         }
 
         public void DeleteAlldata(){
             SQLiteDatabase db = this.getWritableDatabase();
+            al.DelAlarm_All(getListContents());
             db.delete("APinfo", null, null);
+            db.close();
         }
 
         public int countSelect(String value){
