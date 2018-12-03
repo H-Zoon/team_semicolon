@@ -32,6 +32,7 @@
         <activity android:name=".CustomScannerActivity" />
         <activity android:name=".SettingActivity" />
         <activity android:name=".ListActivity"></activity>
+        <activity android:name=".helpActivity"></activity>
         <receiver android:name=".AlarmReceiver" android:process=":remote" />
     </application>
 

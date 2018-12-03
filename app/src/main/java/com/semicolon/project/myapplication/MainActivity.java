@@ -108,15 +108,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     DBManager db;
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu, menu);
-        return true;
-    }
-
-
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -211,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //customize legends
 
         Legend l = mChart.getLegend();
-        l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
+        l.setPosition(Legend.LegendPosition.LEFT_OF_CHART_INSIDE);
         l.setXEntrySpace(7);
         l.setYEntrySpace(5);
         l.setOrientation(Legend.LegendOrientation.VERTICAL);
@@ -323,12 +314,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                Intent intent=new Intent(this, SettingActivity.class);
-                startActivity(intent);
-                Toast.makeText(getApplicationContext(), "환경설정 버튼 클릭됨", Toast.LENGTH_LONG).show();
-                return true;
-
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
@@ -395,10 +380,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.navigation_item_help:
+                Intent intent1 = new Intent(this, helpActivity.class);
+                startActivity(intent1);
                 Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
                 break;
 
-            case R.id.navigation_item_write:
+            case R.id.navigation_item_info:
+
                 Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
                 break;
         }
