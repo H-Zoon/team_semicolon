@@ -38,13 +38,9 @@ public class DBManager extends SQLiteOpenHelper {
 
         // 생성된 DB가 없을 경우에 한번만 호출됨
         public void onCreate(SQLiteDatabase db) {
-            // String dropSql = "drop table if exists " + tableName;
-            // db.execSQL(dropSql);
-
             String createSql = " CREATE TABLE " + tableName + " (ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                     " " + "NAME TEXT," + "MEMO TEXT," + "DATE TEXT," + "VALUE TEXT)";
 
-           // db.execSQL("CREATE TABLE IF NOT EXISTS APinfo (id text PRIMARY KEY AUTOINCREMENT," + " Name text);");
             db.execSQL(createSql);
         }
 
@@ -74,12 +70,6 @@ public class DBManager extends SQLiteOpenHelper {
             Cursor data = db.rawQuery("SELECT * FROM " + tableName, null);
             return data;
         }
-
-        public void deleteData(String name){
-            SQLiteDatabase db = this.getWritableDatabase();
-            db.execSQL("DELETE FROM APinfo WHERE NAME='" + name + "';");
-            db.close();
-        }
     // 데이터 정렬
         public Cursor sort_Date() {
             SQLiteDatabase db = this.getWritableDatabase();
@@ -87,25 +77,37 @@ public class DBManager extends SQLiteOpenHelper {
             return data;
         }
 
-        public Cursor Search_data(String value) {
+        public Cursor sort_Name() {
             SQLiteDatabase db = this.getWritableDatabase();
-            Cursor data = db.rawQuery( "SELECT * FROM APinfo WHERE NAME=" + "'" + value + "'" , null);;
+            Cursor data = db.rawQuery("SELECT * FROM APinfo order by NAME asc", null);
             return data;
         }
 
-        public void Delete_data(){
+        public Cursor Search_data(String value) {
             SQLiteDatabase db = this.getWritableDatabase();
-            // db.rawQuery("DELETE FROM APinfo ", null, null);
-            //String sql = "DELETE FROM APinfo ";
-            // db.execSQL(sql);
-            db.delete("APinfo", null, null);
-    }
+            Cursor data = db.rawQuery( "SELECT * FROM APinfo WHERE NAME=" + "'" + value + "'" , null);
+            return data;
+        }
 
-    public int countSelect(String value){
-        SQLiteDatabase db= this.getWritableDatabase ();
-        Cursor data= db.rawQuery ("select * from APinfo where VALUE = '" + value + "'", null);
-        int count=0;
-        count=data.getCount ();
-        return count;
+        public void deleteData(String name){
+            SQLiteDatabase db = this.getWritableDatabase();
+            al.DelAlarm(Search_data(name));
+            db.execSQL("DELETE FROM APinfo WHERE NAME='" + name + "';");
+            db.close();
+        }
+
+        public void DeleteAlldata(){
+            SQLiteDatabase db = this.getWritableDatabase();
+            al.DelAlarm_All(getListContents());
+            db.delete("APinfo", null, null);
+            db.close();
+        }
+
+        public int countSelect(String value){
+            SQLiteDatabase db= this.getWritableDatabase ();
+            Cursor data= db.rawQuery ("select * from APinfo where VALUE = '" + value + "'", null);
+            int count=0;
+            count=data.getCount ();
+            return count;
     }
 }

@@ -25,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
@@ -154,20 +155,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         chartContainer =(FrameLayout) findViewById(R.id.chartContainer);
 
         mChart = new PieChart(this);
-        //add pie chart to main layout
-        //mainLayout.addView(mChart);
         chartContainer.addView(mChart);
-        //mainLayout.setBackgroundColor(Color.LTGRAY);
-        //  mainLayout.setBackgroundColor(Color.parseColor("#55656C"));
-        //mainLayout.setBackgroundColor(Color.WHITE);
-        //mainLayout.setBackground(R.drawable.roundconer);
-        //configure pie chart
         mChart.setUsePercentValues(true);
         mChart.setDescription(new Description());
 
         //enable hole and configure
         mChart.setDrawHoleEnabled(true);
-        //mChart.setHoleColorTransparent(true);
         mChart.setHoleRadius(30);
         mChart.setTransparentCircleRadius(10);
 
@@ -182,8 +175,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //display message when value selected
                 if (e == null)
                     return;
-
-                //Toast.makeText(MainActivity.this, xData[e.getXIndex()]+" = "+e.getVal()+"%", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -376,7 +367,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.navigation_item_box:
                 Intent intent=new Intent(this, ListActivity.class);
                 startActivity(intent);
-                Toast.makeText(this, "Button1", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.navigation_item_help:
@@ -406,9 +396,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (requestCode == IntentIntegrator.REQUEST_CODE) {
             IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             if (result == null) {
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_LONG).show();
             } else {
-                //Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
                 new GetData().execute(result.getContents());
             }
         } else {

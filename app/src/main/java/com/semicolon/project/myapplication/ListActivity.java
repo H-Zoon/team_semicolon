@@ -4,7 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.support.v4.view.GravityCompat;
+import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -16,11 +16,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
-import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -87,7 +85,9 @@ public class ListActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog,int whichButton){
                         switch (whichButton){
                             case 0:
-                                Toast.makeText ( getApplicationContext (),"레시피를 넣고싶어염",Toast.LENGTH_LONG ).show ();
+                                Uri webpage = Uri.parse("https://www.google.co.kr/search?q=" + d_name + " 레시피");
+                                Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
+                                startActivity(webIntent);
                                 break;
                             case 1:
                                 db.deleteData (d_name);
@@ -100,13 +100,9 @@ public class ListActivity extends AppCompatActivity {
                 });
                 AlertDialog al = alertDialog.create ();
                 al.show ();
-
-
             }
         });
 
-
-        //끝
     }
 
     public boolean onOptionsItemSelected(MenuItem item){
@@ -116,8 +112,7 @@ public class ListActivity extends AppCompatActivity {
                 cursor_integer = 1;
                 sort_List();
                 simpleAdapter.notifyDataSetChanged();
-
-                Toast.makeText(getApplicationContext(), "임박순 버튼 클릭됨", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "임박순 정렬", Toast.LENGTH_LONG).show();
                 return true;
 
             case R.id.action_settings2:
@@ -125,31 +120,28 @@ public class ListActivity extends AppCompatActivity {
                 cursor_integer = 0;
                 sort_List();
                 simpleAdapter.notifyDataSetChanged();
-
-                Toast.makeText(getApplicationContext(), "등록순 버튼 클릭됨", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "등록순 정렬", Toast.LENGTH_LONG).show();
                 return true;
 
             case R.id.action_settings3:
                 //이름순 정렬
-
+                cursor_integer = 2;
+                sort_List();
+                simpleAdapter.notifyDataSetChanged();
                 Toast.makeText(getApplicationContext(), "이름순 버튼 클릭됨", Toast.LENGTH_LONG).show();
                 return true;
 
             case R.id.action_delete:
                 //삭제 버튼
-                db.Delete_data();
+                db.DeleteAlldata();
                 theList.clear();
                 simpleAdapter.notifyDataSetChanged();
                 Toast.makeText(getApplicationContext(), "전체삭제 버튼 클릭됨", Toast.LENGTH_LONG).show();
                 return true;
             default:
-                //Toast.makeText(getApplicationContext(), "나머지 버튼 클릭됨", Toast.LENGTH_LONG).show();
                 return super.onOptionsItemSelected(item);
 
         }
-    }
-    public void please(String name) {
-        db.deleteData (name);
     }
 
     public void sort_List() {
@@ -163,6 +155,9 @@ public class ListActivity extends AppCompatActivity {
                 break;
             case 1 :
                 data = db.sort_Date();
+                break;
+            case 2 :
+                data = db.sort_Name();
                 break;
             default:
                 data = db.getListContents();

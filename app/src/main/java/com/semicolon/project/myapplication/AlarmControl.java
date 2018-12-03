@@ -19,10 +19,12 @@ public class AlarmControl extends MainActivity {
 
         int id = 0;
         String name = "";
+        String Date = "";
 
         while(c.moveToNext()){
             id = c.getInt(0);
             name = c.getString(1);
+            Date = c.getString(3);
         }
 
         Log.d("name and id","name: " + name + "ID: "+id);
@@ -33,21 +35,57 @@ public class AlarmControl extends MainActivity {
         PendingIntent sender = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.add(Calendar.SECOND, 5);
+        //calendar.setTimeInMillis(System.currentTimeMillis());
+
+//시간 저장
+
+        String[] Data_arr = Date.split("/");
+
+        calendar.set(Calendar.YEAR, Integer.parseInt(Data_arr[0]));
+        calendar.set(Calendar.MONTH, Integer.parseInt(Data_arr[1])-1);
+        calendar.set(Calendar.DATE, Integer.parseInt(Data_arr[2]));
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        //calendar.add(Calendar.SECOND, 5); // 테스트용
 
         AlarmManager am = (AlarmManager)context.getSystemService(context.ALARM_SERVICE);
         am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
 
     }
 
-    /*public void DelAlarm() {
-        AlarmManager alarm = (AlarmManager) this.getSystemService(ALARM_SERVICE);
-        Intent intent = new Intent(notifyTest.this, AlarmReceiver.class);
-        intent.putExtra("text", "1st text");
-        intent.putExtra("id", 11111);
-        PendingIntent pender = PendingIntent.getBroadcast(notifyTest.this, 1, intent, 1);
-        alarm.cancel(pender);
-    }*/
+    public void DelAlarm(Cursor c) {
+        int id = 0;
+        String name = "";
+
+        while(c.moveToNext()){
+            id = c.getInt(0);
+            name = c.getString(1);
+        }
+
+        AlarmManager alarm = (AlarmManager)context.getSystemService(context.ALARM_SERVICE);
+        Intent intent = new Intent(context, AlarmReceiver.class);
+        intent.putExtra("ID", id);
+        intent.putExtra("Name", name);
+        PendingIntent sender = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        alarm.cancel(sender);
+    }
+
+    public void DelAlarm_All(Cursor c) {
+        int id = 0;
+        String name = "";
+
+        while(c.moveToNext()){
+            id = c.getInt(0);
+            name = c.getString(1);
+
+            AlarmManager alarm = (AlarmManager)context.getSystemService(context.ALARM_SERVICE);
+            Intent intent = new Intent(context, AlarmReceiver.class);
+            intent.putExtra("ID", id);
+            intent.putExtra("Name", name);
+            PendingIntent sender = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+            alarm.cancel(sender);
+        }
+    }
 
 }
