@@ -2,13 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     android:clickable="true">
     <group android:checkableBehavior="single">
+
         <item
             android:id="@+id/navigation_item_box"
             android:icon="@drawable/round_archive_black_24"
             android:title="@string/nav_menu_1"/>
-        <item
-            android:id="@+id/navigation_item_chart"
-            android:title="@string/nav_menu_2"/>
         <item
             android:icon="@drawable/round_add_circle_outline_black_24"
             android:id="@+id/navigation_item_write"

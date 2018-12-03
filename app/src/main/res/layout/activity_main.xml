@@ -32,25 +32,29 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="300dp"/>
--->
-        <!--파이 차트-->
-        <include
-            layout="@layout/pie_chart"
-            android:layout_width="match_parent"
-            android:layout_height="210dp"
-            android:layout_gravity="center_horizontal|top"
-            android:layout_marginRight="25dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="150dp"
-            android:background="@drawable/roundconer"/>
+-->     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <!--냉장이-->
-        <include
+            <include
             layout="@layout/frezetalk"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_gravity="bottom|end"
-            />
-
+            android:layout_gravity="top"
+            android:layout_marginTop="140dp" />
+        <!--파이 차트-->
+            <include
+                layout="@layout/pie_chart"
+                android:layout_width="match_parent"
+                android:layout_height="210dp"
+                android:layout_gravity="center_horizontal|bottom"
+                android:background="@drawable/roundconer"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="45dp"/>
+        </RelativeLayout>
         <!-- 플로팅 버튼-->
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab2"
