@@ -37,67 +37,60 @@ public class DBManager extends SQLiteOpenHelper {
         }
 
         // 생성된 DB가 없을 경우에 한번만 호출됨
+        public void onCreate(SQLiteDatabase db) {
+            // String dropSql = "drop table if exists " + tableName;
+            // db.execSQL(dropSql);
 
-    public void onCreate(SQLiteDatabase db) {
+            String createSql = " CREATE TABLE " + tableName + " (ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    " " + "NAME TEXT," + "MEMO TEXT," + "DATE TEXT," + "VALUE TEXT)";
+
+           // db.execSQL("CREATE TABLE IF NOT EXISTS APinfo (id text PRIMARY KEY AUTOINCREMENT," + " Name text);");
+            db.execSQL(createSql);
+        }
 
 
-        String createSql = " CREATE TABLE " + tableName + " (ID INTEGER PRIMARY KEY AUTOINCREMENT," +
-                " " + "NAME TEXT," + "MEMO TEXT," + "DATE TEXT," + "VALUE TEXT)";
+        @Override
+        public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
+            // TODO Auto-generated method stub
+        }
 
-        db.execSQL(createSql);
-    }
+        public void addData(String item1,String item2,String item3,String item4) {
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(COL2, item1);
+            contentValues.put(COL3, item2);
+            contentValues.put(COL4, item3);
+            contentValues.put(COL5, item4);
 
+            long result = db.insert(tableName, null, contentValues);
 
-    @Override
-    public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
-        // TODO Auto-generated method stub
-    }
+            Cursor c = Search_data(item1);
+            al.AddAlarm(c);
 
-    public void addData(String item1,String item2,String item3,String item4) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COL2, item1);
-        contentValues.put(COL3, item2);
-        contentValues.put(COL4, item3);
-        contentValues.put(COL5, item4);
+        }
 
-        long result = db.insert(tableName, null, contentValues);
+        public Cursor getListContents() {
+            SQLiteDatabase db = this.getWritableDatabase();
+            Cursor data = db.rawQuery("SELECT * FROM " + tableName, null);
+            return data;
+        }
 
-        Cursor c = Search_data(item1);
-        al.AddAlarm(c);
-    }
-
-    public Cursor getListContents() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor data = db.rawQuery("SELECT * FROM " + tableName, null);
-        return data;
-    }
-
-    public void deleteData(String name){
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM APinfo WHERE NAME='" + name + "';");
-        db.close();
-    }
-
+        public void deleteData(String name){
+            SQLiteDatabase db = this.getWritableDatabase();
+            db.execSQL("DELETE FROM APinfo WHERE NAME='" + name + "';");
+            db.close();
+        }
     // 데이터 정렬
-    public Cursor sort_Date() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor data = db.rawQuery("SELECT * FROM APinfo order by DATE asc", null);
-        return data;
+        public Cursor sort_Date() {
+            SQLiteDatabase db = this.getWritableDatabase();
+            Cursor data = db.rawQuery("SELECT * FROM APinfo order by DATE asc", null);
+            return data;
     }
 
-    public Cursor Search_data(String value) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor data = db.rawQuery( "SELECT * FROM APinfo WHERE NAME=" + "'" + value + "'" , null);;
-        return data;
-    }
-
-    public int countSelect(String value) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor data = db.rawQuery("select * from APinfo where VALUE = '" + value + "'", null);
-        int count = 0;
-        count = data.getCount();
-        return count;
+        public Cursor Search_data(String value) {
+            SQLiteDatabase db = this.getWritableDatabase();
+            Cursor data = db.rawQuery( "SELECT * FROM APinfo WHERE NAME=" + "'" + value + "'" , null);;
+            return data;
     }
     public int countSelect(String value){
         SQLiteDatabase db= this.getWritableDatabase ();

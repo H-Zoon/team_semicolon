@@ -137,10 +137,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:clickable="true"
-        app:menu="@menu/drawer"
-        >
-
-
-    </android.support.design.widget.NavigationView>
+        app:menu="@menu/drawer"></android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

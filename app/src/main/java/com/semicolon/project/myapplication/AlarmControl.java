@@ -8,37 +8,36 @@ import android.util.Log;
 
 import java.util.Calendar;
 
-
 public class AlarmControl extends MainActivity {
 
     public AlarmControl() {
         // TODO Auto-generated constructor stub
     }
 
-   public void AddAlarm(Cursor c) {
+    public void AddAlarm(Cursor c) {
         // 알람리시버 intent 생성
 
-       int id = 0;
-       String name = "";
+        int id = 0;
+        String name = "";
 
-       while(c.moveToNext()){
-           id = c.getInt(0);
-           name = c.getString(1);
-       }
+        while(c.moveToNext()){
+            id = c.getInt(0);
+            name = c.getString(1);
+        }
 
-       Log.d("name and id","name: " + name + "ID: "+id);
+        Log.d("name and id","name: " + name + "ID: "+id);
 
-       Intent intent = new Intent(context, AlarmReceiver.class);
-       intent.putExtra("ID", id);
-       intent.putExtra("Name", name);
-       PendingIntent sender = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        Intent intent = new Intent(context, AlarmReceiver.class);
+        intent.putExtra("ID", id);
+        intent.putExtra("Name", name);
+        PendingIntent sender = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
-       Calendar calendar = Calendar.getInstance();
-       calendar.setTimeInMillis(System.currentTimeMillis());
-       calendar.add(Calendar.SECOND, 5);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.add(Calendar.SECOND, 5);
 
-       AlarmManager am = (AlarmManager)context.getSystemService(context.ALARM_SERVICE);
-       am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+        AlarmManager am = (AlarmManager)context.getSystemService(context.ALARM_SERVICE);
+        am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
 
     }
 
