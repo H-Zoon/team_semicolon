@@ -108,6 +108,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //디비
     DBManager db;
 
+    //비밀입니다 깔~
+    egg easter = new egg();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -360,9 +362,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //item.setChecked(true);
         //drawerLayout.closeDrawers();
         int id = item.getItemId();
+
         // 각 메뉴 클릭시 이뤄지는 이벤트
         FragmentManager manager = getFragmentManager();
 
+        easter.addegg();
         switch (id) {
             case R.id.navigation_item_box:
                 Intent intent=new Intent(this, ListActivity.class);
@@ -376,8 +380,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.navigation_item_info:
-
-                Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
+                if(easter.getegg() == 0) {
+                    Toast.makeText(MainActivity.this, R.string.Develop_info, Toast.LENGTH_LONG).show();
+                }else if(easter.getegg() == 1) {
+                    Toast.makeText(MainActivity.this, R.string.school, Toast.LENGTH_LONG).show();
+                }else if(easter.getegg() == 2) {
+                    Toast.makeText(MainActivity.this, R.string.imfun, Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(MainActivity.this, R.string.last, Toast.LENGTH_LONG).show();
+                }
                 break;
         }
 

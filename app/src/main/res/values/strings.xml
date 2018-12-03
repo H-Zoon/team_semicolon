@@ -3,4 +3,11 @@
     <string name="nav_menu_1">보관함</string>
     <string name="nav_menu_3">개발자 정보</string>
     <string name="nav_menu_4">도움말</string>
+    <string name="Develop_info">명지대학교 컴퓨터공학과
+    팀 Sem;colon 안드로이드 프로젝트
+    참가자: 최현준, 황금주, 김희수, 박창선
+    수고하셨습니다!</string>
+    <string name="school">쫌만 있으면 종강이다 개꿀</string>
+    <string name="imfun">흑흑 자고싶어여 잘 수 있게 해주세여....</string>
+    <string name="last">머여 이제 보여줄 거 없어여 그만눌러여</string>
 </resources>
