@@ -26,10 +26,12 @@ public class AlarmControl extends MainActivity {
            name = c.getString(1);
        }
 
+       Log.d("name and id","name: " + name + "ID: "+id);
+
        Intent intent = new Intent(context, AlarmReceiver.class);
        intent.putExtra("ID", id);
        intent.putExtra("Name", name);
-       PendingIntent sender = PendingIntent.getBroadcast(context, 0, intent, 0);
+       PendingIntent sender = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
        Calendar calendar = Calendar.getInstance();
        calendar.setTimeInMillis(System.currentTimeMillis());

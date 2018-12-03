@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -86,7 +87,6 @@ public class ListActivity extends AppCompatActivity {
                         .setPositiveButton ( "네" , new DialogInterface.OnClickListener () {
                             @Override
                             public void onClick(DialogInterface dialog , int which) {
-                                //please(d_name);
                                 db.deleteData (d_name);
                                 sort_List();
                                 simpleAdapter.notifyDataSetChanged();
@@ -96,6 +96,12 @@ public class ListActivity extends AppCompatActivity {
                 alertDialog.setNegativeButton ( "아니요" , new DialogInterface.OnClickListener () {
                     @Override
                     public void onClick(DialogInterface dialog , int which) {
+
+                        //아니요 누를시 레시피
+                        Uri webpage = Uri.parse("https://www.google.co.kr/search?q=" + d_name + " 레시피");
+                        Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
+                        startActivity(webIntent);
+
                         dialog.cancel ();
                     }
                 } );
