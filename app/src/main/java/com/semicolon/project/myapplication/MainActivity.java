@@ -123,14 +123,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,InputVoice.class));
-            }
-        });
-
         db = new DBManager(this);
 
         MainActivity.context = getApplicationContext();
@@ -172,20 +164,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         chartContainer =(FrameLayout) findViewById(R.id.chartContainer);
 
         mChart = new PieChart(this);
-        //add pie chart to main layout
-        //mainLayout.addView(mChart);
         chartContainer.addView(mChart);
-        //mainLayout.setBackgroundColor(Color.LTGRAY);
-        //  mainLayout.setBackgroundColor(Color.parseColor("#55656C"));
-        //mainLayout.setBackgroundColor(Color.WHITE);
-        //mainLayout.setBackground(R.drawable.roundconer);
-        //configure pie chart
         mChart.setUsePercentValues(true);
         mChart.setDescription(new Description());
 
         //enable hole and configure
         mChart.setDrawHoleEnabled(true);
-        //mChart.setHoleColorTransparent(true);
         mChart.setHoleRadius(30);
         mChart.setTransparentCircleRadius(10);
 
@@ -200,8 +184,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //display message when value selected
                 if (e == null)
                     return;
-
-                //Toast.makeText(MainActivity.this, xData[e.getXIndex()]+" = "+e.getVal()+"%", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -335,7 +317,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.action_settings:
                 Intent intent=new Intent(this, SettingActivity.class);
                 startActivity(intent);
-                Toast.makeText(getApplicationContext(), "환경설정 버튼 클릭됨", Toast.LENGTH_LONG).show();
                 return true;
 
             case android.R.id.home:
@@ -343,7 +324,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
 
             default:
-                //Toast.makeText(getApplicationContext(), "나머지 버튼 클릭됨", Toast.LENGTH_LONG).show();
                 return super.onOptionsItemSelected(item);
 
         }
@@ -356,16 +336,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (id) {
             case R.id.fab:
                 anim();
-                Toast.makeText(this, "Floating Action Button", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.fab1:
                 anim();
-                Toast.makeText(this, "Button1", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(MainActivity.this,InputActivity.class));
                 break;
             case R.id.fab2:
                 anim();
-                Toast.makeText(this, "Button2", Toast.LENGTH_SHORT).show();
                 startQRCode();
                 break;
         }
@@ -400,15 +377,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.navigation_item_box:
                 Intent intent=new Intent(this, ListActivity.class);
                 startActivity(intent);
-                Toast.makeText(this, "Button1", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.navigation_item_help:
-                Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
                 break;
 
             case R.id.navigation_item_write:
-                Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
                 break;
         }
 
@@ -427,9 +401,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (requestCode == IntentIntegrator.REQUEST_CODE) {
             IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             if (result == null) {
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_LONG).show();
             } else {
-                //Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
                 new GetData().execute(result.getContents());
             }
         } else {
