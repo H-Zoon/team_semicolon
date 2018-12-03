@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.net.Uri;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -79,38 +78,32 @@ public class ListActivity extends AppCompatActivity {
                HashMap selection = (HashMap)lv.getItemAtPosition ( position );
                 final String d_name=(String)selection.get(TAG_NAME);
 
-                Toast.makeText(getApplicationContext(), d_name, Toast.LENGTH_LONG).show();
+                CharSequence info[]= new CharSequence[]{"레시피보기","삭제하기"};
 
                 final AlertDialog.Builder alertDialog = new AlertDialog.Builder (ListActivity.this);
-                alertDialog.setTitle ( "삭제" )
-                        .setMessage ( "삭제하시겠습니까?" )
-                        .setPositiveButton ( "네" , new DialogInterface.OnClickListener () {
-                            @Override
-                            public void onClick(DialogInterface dialog , int which) {
+                alertDialog.setTitle ( "리스트 옵션" );
+                alertDialog.setItems( info, new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog,int whichButton){
+                        switch (whichButton){
+                            case 0:
+                                Toast.makeText ( getApplicationContext (),"레시피를 넣고싶어염",Toast.LENGTH_LONG ).show ();
+                                break;
+                            case 1:
                                 db.deleteData (d_name);
                                 sort_List();
                                 simpleAdapter.notifyDataSetChanged();
                                 Toast.makeText ( getApplicationContext (),"삭제되었습니다.",Toast.LENGTH_LONG ).show ();
-                            }
-                        });
-                alertDialog.setNegativeButton ( "아니요" , new DialogInterface.OnClickListener () {
-                    @Override
-                    public void onClick(DialogInterface dialog , int which) {
-
-                        //아니요 누를시 레시피
-                        Uri webpage = Uri.parse("https://www.google.co.kr/search?q=" + d_name + " 레시피");
-                        Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
-                        startActivity(webIntent);
-
-                        dialog.cancel ();
+                        }
+                        dialog.dismiss ();
                     }
-                } );
+                });
                 AlertDialog al = alertDialog.create ();
                 al.show ();
 
 
             }
-        } );
+        });
 
 
         //끝
@@ -141,10 +134,7 @@ public class ListActivity extends AppCompatActivity {
 
                 Toast.makeText(getApplicationContext(), "이름순 버튼 클릭됨", Toast.LENGTH_LONG).show();
                 return true;
-            case R.id.action_delete:
-                //삭제 버튼
 
-                return true;
             default:
                 //Toast.makeText(getApplicationContext(), "나머지 버튼 클릭됨", Toast.LENGTH_LONG).show();
                 return super.onOptionsItemSelected(item);
