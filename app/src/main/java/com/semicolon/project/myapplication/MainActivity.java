@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -164,8 +165,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         chartContainer.addView(mChart);
         //mainLayout.setBackgroundColor(Color.LTGRAY);
         //  mainLayout.setBackgroundColor(Color.parseColor("#55656C"));
-        mainLayout.setBackgroundColor(Color.WHITE);
-
+        //mainLayout.setBackgroundColor(Color.WHITE);
+        //mainLayout.setBackground(R.drawable.roundconer);
         //configure pie chart
         mChart.setUsePercentValues(true);
         mChart.setDescription(new Description());
@@ -216,10 +217,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void run() {
-                for(int i = 0; i < 500; i++) {
+                for(int i = 1; i != 0; i++) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            mChart.clear();
                             addData();
                         }
                     });
@@ -361,13 +363,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FragmentManager manager = getFragmentManager();
 
         switch (id) {
-            case R.id.navigation_item_wordbook:
+            case R.id.navigation_item_box:
                 Intent intent=new Intent(this, ListActivity.class);
                 startActivity(intent);
                 Toast.makeText(this, "Button1", Toast.LENGTH_SHORT).show();
                 break;
 
-            case R.id.navigation_item_camera:
+            case R.id.navigation_item_help:
                 Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
                 break;
 
