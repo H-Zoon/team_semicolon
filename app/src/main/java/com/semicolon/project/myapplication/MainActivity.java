@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //enable hole and configure
         mChart.setDrawHoleEnabled(true);
-        // mChart.setHoleColorTransparent(true);
+        //mChart.setHoleColorTransparent(true);
         mChart.setHoleRadius(30);
         mChart.setTransparentCircleRadius(10);
 
