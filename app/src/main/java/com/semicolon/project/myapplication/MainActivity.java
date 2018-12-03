@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -24,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -134,6 +136,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         myToolbar.setTitleTextColor(Color.WHITE);
 
         //날짜출력
+
         printDate = (TextView) findViewById(R.id.Date_String);
         printDate.setText(Today);
 
@@ -213,6 +216,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         l.setYEntrySpace(5);
         l.setOrientation(Legend.LegendOrientation.VERTICAL);
 
+        final TextView talk= findViewById ( R.id.talk );
+
         new Thread(new Runnable() {
 
             @Override
@@ -221,8 +226,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            mChart.clear();
                             addData();
+                            talk.setText ( talk () );
                         }
                     });
 
@@ -233,6 +238,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         }).start();
+
+        //냉장이가 말을 한다 홍홍홍
+
+    }
+
+    public String talk(){
+        Cursor c = db.sort_Date ();
+        String name = null;
+
+        while (c.moveToNext()) {
+            name = c.getString ( 1 );
+            break;
+        }
+        if(name==null){
+            name="등록된 상품이 없습니다.";
+        }
+
+        return name;
+
     }
 
     private void addData(){

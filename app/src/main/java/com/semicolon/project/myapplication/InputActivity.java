@@ -129,6 +129,7 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
                 }else{
                     Toast.makeText(InputActivity.this,"값을 입력해주세요.",Toast.LENGTH_LONG).show();
                 }
+
                 break;
             case R.id.cancel:
                 finish();
