@@ -6,27 +6,12 @@
     android:layout_height="match_parent"
     android:background="#eaa59e"><!--xmlns:tools="http://schemas.android.com/tools"  tools:context=".MainActivity"-->
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <!-- 툴바-->
-        <android.support.v7.widget.Toolbar
-            android:id = "@+id/my_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-        </android.support.v7.widget.Toolbar>
-
-    </RelativeLayout>
-
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/dl_activity_main_drawer"
+        android:background="@drawable/background"
         tools:context=".MainActivity" >
 
 
@@ -38,7 +23,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|top"
-            android:layout_marginTop="70dp" />
+            android:layout_marginTop="70dp"
+            />
         <!--
         <include
             layout="@layout/today_tip"
@@ -47,6 +33,31 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="300dp"/>
 -->
+        <FrameLayout
+            android:layout_height="fill_parent"
+            android:layout_width="fill_parent">
+
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="200dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="370dp"
+                android:src="@drawable/fridgetalk"
+
+                />
+        <!-- 냉장이의 말-->
+            <TextView
+                android:id="@+id/talk"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:text="냉장이가 말합니다"
+                android:layout_marginStart="70dp"
+                android:layout_marginTop="450dp"
+                />
+
+        </FrameLayout>
+
         <!--파이 차트-->
         <include
             layout="@layout/pie_chart"
@@ -57,7 +68,6 @@
             android:layout_marginLeft="25dp"
             android:layout_marginTop="150dp"
             android:background="@drawable/roundconer"/>
-
 
         <!-- 플로팅 버튼-->
         <android.support.design.widget.FloatingActionButton
@@ -102,6 +112,24 @@
             android:src="@drawable/ic_add_black_24dp" />
 
     </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <!-- 툴바-->
+        <android.support.v7.widget.Toolbar
+            android:id = "@+id/my_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        </android.support.v7.widget.Toolbar>
+
+    </RelativeLayout>
+
+
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_view"

@@ -99,6 +99,13 @@ public class DBManager extends SQLiteOpenHelper {
         count = data.getCount();
         return count;
     }
+    public int countSelect(String value){
+        SQLiteDatabase db= this.getWritableDatabase ();
+        Cursor data= db.rawQuery ("select * from APinfo where VALUE = '" + value + "'", null);
+        int count=0;
+        count=data.getCount ();
+        return count;
+    }
 }
 
 

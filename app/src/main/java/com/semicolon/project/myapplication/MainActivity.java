@@ -6,6 +6,8 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -21,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -125,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         myToolbar.setTitleTextColor(Color.WHITE);
 
         //날짜출력
+
         printDate = (TextView) findViewById(R.id.Date_String);
         printDate.setText(Today);
 
@@ -156,15 +160,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         chartContainer.addView(mChart);
         //mainLayout.setBackgroundColor(Color.LTGRAY);
         //  mainLayout.setBackgroundColor(Color.parseColor("#55656C"));
-        mainLayout.setBackgroundColor(Color.WHITE);
-
+        //mainLayout.setBackgroundColor(Color.WHITE);
+        //mainLayout.setBackground(R.drawable.roundconer);
         //configure pie chart
         mChart.setUsePercentValues(true);
         mChart.setDescription(new Description());
 
         //enable hole and configure
         mChart.setDrawHoleEnabled(true);
-        // mChart.setHoleColorTransparent(true);
+        //mChart.setHoleColorTransparent(true);
         mChart.setHoleRadius(30);
         mChart.setTransparentCircleRadius(10);
 
@@ -204,15 +208,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         l.setYEntrySpace(5);
         l.setOrientation(Legend.LegendOrientation.VERTICAL);
 
+        final TextView talk= findViewById ( R.id.talk );
+
         new Thread(new Runnable() {
 
             @Override
             public void run() {
-                for(int i = 0; i < 500; i++) {
+                for(int i = 1; i != 0; i++) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             addData();
+                            talk.setText ( talk () );
                         }
                     });
 
@@ -223,6 +230,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         }).start();
+
+        //냉장이가 말을 한다 홍홍홍
+
+    }
+
+    public String talk(){
+        Cursor c = db.sort_Date ();
+        String name = null;
+
+        while (c.moveToNext()) {
+            name = c.getString ( 1 );
+            break;
+        }
+        if(name==null){
+            name="등록된 상품이 없습니다.";
+        }
+
+        return name;
+
     }
 
     private void addData(){
@@ -353,13 +379,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FragmentManager manager = getFragmentManager();
 
         switch (id) {
-            case R.id.navigation_item_wordbook:
+            case R.id.navigation_item_box:
                 Intent intent=new Intent(this, ListActivity.class);
                 startActivity(intent);
                 Toast.makeText(this, "Button1", Toast.LENGTH_SHORT).show();
                 break;
 
-            case R.id.navigation_item_camera:
+            case R.id.navigation_item_help:
                 Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
                 break;
 
